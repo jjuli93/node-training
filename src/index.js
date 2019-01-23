@@ -1,8 +1,7 @@
 require('dotenv').config();
 
-const constants = require('./constants');
-
 const Koa = require('koa');
+const constants = require('./constants');
 
 const app = new Koa();
 

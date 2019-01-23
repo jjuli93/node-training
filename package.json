@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src"
+    "dev": "nodemon src",
+    "lint": "eslint ."
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +15,13 @@
     "koa-bodyparser": "^4.2.1"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9"
-  }
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.15.0",
+    "nodemon": "^1.18.9",
+    "pre-commit": "^1.2.2"
+  },
+  "pre-commit": [
+    "lint"
+  ]
 }
