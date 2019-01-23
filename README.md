@@ -4,5 +4,8 @@
 - Install expected node version (.nvmrc)
 - Install dependencies `npm install`
 
-## Start
-- `npm run dev`
+## Scripts
+- Start server on dev: `npm run dev`
+- Run linter: `npm run lint`
+- Run tests: `npm run test`
+- Watch tests: `npm run test-watch`

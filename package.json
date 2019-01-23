@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "jest",
+    "test-watch": "jest --watch"
   },
   "author": "",
   "license": "ISC",
@@ -19,10 +21,13 @@
     "eslint": "^5.12.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.15.0",
+    "jest": "^23.6.0",
     "nodemon": "^1.18.9",
-    "pre-commit": "^1.2.2"
+    "pre-commit": "^1.2.2",
+    "supertest": "^3.4.2"
   },
   "pre-commit": [
-    "lint"
+    "lint",
+    "test"
   ]
 }

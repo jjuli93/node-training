@@ -1,8 +1,11 @@
 const Router = require('koa-router');
-const housesController = require('../controllers/houses');
+const housesService = require('../services/houses');
 
 const router = new Router();
 
-router.get('/', housesController.index);
+router.get('/', (ctx) => {
+  const houses = housesService.getHouses();
+  ctx.body = { houses };
+});
 
 module.exports = router;
