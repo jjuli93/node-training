@@ -1,8 +1,8 @@
 const Router = require('koa-router');
-const housesRouter = require('./houses');
+const homesRouter = require('./homes');
 
 const apiRouter = new Router({ prefix: '/api' });
 
-apiRouter.use('/houses', housesRouter.routes());
+apiRouter.use('/homes', homesRouter.routes());
 
 module.exports = apiRouter;
