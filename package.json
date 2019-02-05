@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src",
     "lint": "eslint .",
-    "test": "jest --forceExit",
+    "test": "jest",
     "test-watch": "jest --watch"
   },
   "author": "",

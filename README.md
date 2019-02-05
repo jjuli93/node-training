@@ -19,5 +19,5 @@
 - Run seeds: `npx knex seed:run`
 
 ## Running tests
-- Create test database `createdb starter-home-test`
+- Create test database `createdb starter_home_test`
 - Migrate test database `npx knex migrate:latest --env test`
