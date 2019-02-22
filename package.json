@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src",
+    "dev": "nodemon src | pino-pretty",
     "lint": "eslint .",
-    "test": "jest",
-    "test-watch": "jest --watch"
+    "test": "jest --runInBand",
+    "test-watch": "npm run test -- --watch"
   },
   "author": "",
   "license": "ISC",
@@ -18,7 +18,8 @@
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
-    "pg": "^7.8.0"
+    "pg": "^7.8.0",
+    "pino": "^5.11.1"
   },
   "devDependencies": {
     "eslint": "^5.12.1",
@@ -26,6 +27,7 @@
     "eslint-plugin-import": "^2.15.0",
     "jest": "^23.6.0",
     "nodemon": "^1.18.9",
+    "pino-pretty": "^2.5.0",
     "pre-commit": "^1.2.2",
     "supertest": "^3.4.2"
   },

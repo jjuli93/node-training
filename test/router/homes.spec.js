@@ -1,3 +1,5 @@
+require('../test_helper');
+
 const request = require('supertest');
 const Koa = require('koa');
 const homesService = require('../../src/services/homes');
