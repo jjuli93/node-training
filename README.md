@@ -5,7 +5,7 @@
 - Follow the setup section
 - Run the tests
 - Start the server
-- Go to http://localhost:3000/api/homes
+- Go to http://localhost:3000/api/things
 
 After all is setup & running, feel free to remove the local git repository and initialize a new one, rename databases,
 and remove the sample source code.
@@ -36,5 +36,5 @@ and remove the sample source code.
 - Run seeds: `npx knex seed:run`
 
 ## Running tests
-- Create test database `createdb starter_home_test`
+- Create test database `createdb things_test`
 - Migrate test database `npx knex migrate:latest --env test`

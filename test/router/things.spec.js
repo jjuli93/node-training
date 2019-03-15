@@ -2,16 +2,16 @@ require('../test_helper');
 
 const request = require('supertest');
 const Koa = require('koa');
-const homesService = require('../../src/services/homes');
-const homesRouter = require('../../src/router/homes');
+const thingsService = require('../../src/services/things');
+const thingsRouter = require('../../src/router/things');
 
-describe('router/homes', () => {
+describe('router/things', () => {
   let app;
   let server;
 
   beforeEach(() => {
     app = new Koa();
-    app.use(homesRouter.routes());
+    app.use(thingsRouter.routes());
     server = app.listen();
   });
 
@@ -21,10 +21,10 @@ describe('router/homes', () => {
 
   describe('/', () => {
     it('sends the expected response', async () => {
-      jest.spyOn(homesService, 'getHomes').mockImplementation(() => 'homes');
+      jest.spyOn(thingsService, 'all').mockImplementation(() => 'things');
       const response = await request(server).get('/');
       expect(response.status).toBe(200);
-      expect(response.body).toEqual({ homes: 'homes' });
+      expect(response.body).toEqual({ things: 'things' });
     });
   });
 });

@@ -1,9 +1,9 @@
 exports.up = knex => (
-  knex.schema.createTable('homes', (table) => {
+  knex.schema.createTable('things', (table) => {
     table.increments();
     table.string('name');
     table.timestamps(false, true);
   })
 );
 
-exports.down = knex => knex.schema.dropTable('homes');
+exports.down = knex => knex.schema.dropTable('things');

@@ -1,8 +1,8 @@
 
 exports.seed = (knex, Promise) => {
-  return knex('homes').del()
+  return knex('things').del()
     .then(() => {
-      return knex('homes').insert([
+      return knex('things').insert([
         { name: 'name1' },
         { name: 'name2' },
         { name: 'name3' },
