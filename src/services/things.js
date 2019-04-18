@@ -12,7 +12,9 @@ const all = () => Thing.query();
 const create = ({ thing }) => {
   const thingParams = pick(thing, THING_VALID_PARAMS);
   const validationResult = Joi.validate(thingParams, thingValidation);
-  if (validationResult.error) { throw new ValidationError(validationResult.error.details); }
+  if (validationResult.error) {
+    throw new ValidationError(validationResult.error.details);
+  }
 
   return Thing.query().insert(thingParams);
 };
