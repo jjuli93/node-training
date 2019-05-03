@@ -7,7 +7,7 @@ const ValidationError = require('../validations/ValidationError');
 
 const THING_VALID_PARAMS = ['name'];
 
-const all = () => Thing.query();
+const all = () => Thing.query().returning('*');
 
 const create = ({ thing }) => {
   const thingParams = pick(thing, THING_VALID_PARAMS);
@@ -16,7 +16,9 @@ const create = ({ thing }) => {
     throw new ValidationError(validationResult.error.details);
   }
 
-  return Thing.query().insert(thingParams);
+  return Thing.query()
+    .insert(thingParams)
+    .returning('*');
 };
 
 module.exports = { all, create };

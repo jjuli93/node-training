@@ -1,23 +1,12 @@
 const Router = require('koa-router');
-const logger = require('../initializers/logger');
 const thingsService = require('../services/things');
+const { thingsSerializer } = require('../serializers');
+const withResponse = require('../middlewares/withResponse');
 
 const router = new Router();
 
-router.get('/', async (ctx) => {
-  const things = await thingsService.all();
+router.get('/', withResponse(thingsSerializer, () => thingsService.all()));
 
-  logger.debug('things', things);
-
-  ctx.body = { things };
-});
-
-router.post('/', async (ctx) => {
-  const thing = await thingsService.create(ctx.request.body);
-
-  logger.debug('things', thing);
-
-  ctx.body = { thing };
-});
+router.post('/', withResponse(thingsSerializer, (ctx) => thingsService.create(ctx.request.body)));
 
 module.exports = router;

@@ -21,10 +21,10 @@ describe('router/things', () => {
 
   describe('/', () => {
     it('sends the expected response', async () => {
-      jest.spyOn(thingsService, 'all').mockImplementation(() => 'things');
+      jest.spyOn(thingsService, 'all').mockImplementation(() => []);
       const response = await request(server).get('/');
       expect(response.status).toBe(200);
-      expect(response.body).toEqual({ things: 'things' });
+      expect(response.body).toEqual({ things: [] });
     });
   });
 });
