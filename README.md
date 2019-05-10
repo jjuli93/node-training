@@ -12,6 +12,7 @@ and remove the sample source code.
 
 ## Stack
 - koa2 & friends
+- Objection.js
 - knex
 - jest
 - PostgreSQL
