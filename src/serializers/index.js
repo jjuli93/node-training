@@ -1,5 +1,7 @@
-const thingsSerializer = require('./things');
+const ThingSerializer = require('./thing');
+const CategorySerializer = require('./category');
 
 module.exports = {
-  thingsSerializer,
+  ThingSerializer,
+  CategorySerializer,
 };

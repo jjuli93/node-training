@@ -42,4 +42,24 @@ describe('validations/thing', () => {
       });
     });
   });
+
+  describe('category_id', () => {
+    describe('when it is not present', () => {
+      itIsInvalid({ ...thing1, category_id: undefined });
+    });
+
+    describe('when it is present', () => {
+      describe('when it is not a number', () => {
+        itIsInvalid({ ...thing1, category_id: 'abc' });
+      });
+
+      describe('when it is a number', () => {
+        itIsValid({ ...thing1, category_id: 123 });
+      });
+
+      describe('when it is a string that represents number', () => {
+        itIsValid({ ...thing1, category_id: '123' });
+      });
+    });
+  });
 });

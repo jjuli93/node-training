@@ -1,5 +1,3 @@
-require('./test_helper');
-
 const knexCleaner = require('knex-cleaner');
 const { knexConnection } = require('../src/initializers/knex')();
 

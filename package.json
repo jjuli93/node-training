@@ -7,7 +7,7 @@
     "dev": "nodemon --inspect src",
     "lint": "eslint .",
     "format:fix": "pretty-quick --staged",
-    "test": "jest --runInBand",
+    "test": "jest --runInBand --config=test/jest.config.json",
     "test-watch": "npm run test -- --watch",
     "precommit": "run-s format:fix lint test"
   },
@@ -27,6 +27,7 @@
     "pino": "^5.11.1"
   },
   "devDependencies": {
+    "bdd-lazy-var": "^2.5.2",
     "eslint": "^5.12.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.15.0",

@@ -1,5 +1,3 @@
-require('../test_helper');
-
 const request = require('supertest');
 const Koa = require('koa');
 const errorHandlerMiddleware = require('../../src/middlewares/errorHandler');
