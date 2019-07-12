@@ -1,6 +1,6 @@
 const Router = require('koa-router');
 const thingsService = require('../services/things');
-const withResponse = require('../middlewares/withResponse');
+const { withResponseMiddleware } = require('../../lib');
 const { ThingSerializer, CategorySerializer } = require('../serializers');
 
 const router = new Router();
@@ -9,7 +9,7 @@ const thingsIndexSerializer = new ThingSerializer();
 
 router.get(
   '/',
-  withResponse(
+  withResponseMiddleware(
     thingsIndexSerializer,
     () => thingsService.all(),
   ),
@@ -23,7 +23,7 @@ const thingsShowSerializer = new ThingSerializer({
 
 router.post(
   '/',
-  withResponse(
+  withResponseMiddleware(
     thingsShowSerializer,
     (ctx) => thingsService.create(ctx.request.body),
   ),

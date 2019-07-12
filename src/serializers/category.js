@@ -1,4 +1,4 @@
-const Serializer = require('./serializer');
+const { Serializer } = require('../../lib');
 
 class CategorySerializer extends Serializer {
   constructor({ thingSerializer = null } = {}) {

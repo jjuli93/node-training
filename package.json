@@ -7,7 +7,7 @@
     "dev": "nodemon --inspect src",
     "lint": "eslint .",
     "format:fix": "pretty-quick --staged",
-    "test": "jest --runInBand --config=test/jest.config.json",
+    "test": "jest --runInBand --config=jest.config.js",
     "test-watch": "npm run test -- --watch",
     "precommit": "run-s format:fix lint test"
   },

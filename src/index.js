@@ -1,20 +1,9 @@
 require('dotenv').config();
 
-const Koa = require('koa');
-const bodyParser = require('koa-bodyparser');
-const initializeKnex = require('./initializers/knex');
+const { initializeApp } = require('../lib');
 const constants = require('./constants');
 const router = require('./router');
-const errorHandlerMiddleware = require('./middlewares/errorHandler');
 
-initializeKnex();
-
-const app = new Koa();
-
-app.use(bodyParser());
-
-app.use(errorHandlerMiddleware);
-
-app.use(router.routes());
+const app = initializeApp({ router });
 
 app.listen(constants.PORT);

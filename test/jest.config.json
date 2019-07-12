@@ -1,5 +1,0 @@
-{
-  "setupTestFrameworkScriptFile": "<rootDir>/testSetup.js",
-  "clearMocks": true,
-  "restoreMocks": true
-}

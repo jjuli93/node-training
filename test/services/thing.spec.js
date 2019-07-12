@@ -1,5 +1,5 @@
 const thingsService = require('../../src/services/things');
-const { knexConnection } = require('../../src/initializers/knex')();
+const { knexConnection } = require('../knexTestHelper');
 
 describe('services/things', () => {
   let category;

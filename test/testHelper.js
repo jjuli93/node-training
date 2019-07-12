@@ -1,3 +1,3 @@
-const logger = require('../src/initializers/logger');
+const { logger } = require('../lib');
 
 logger.level = 'silent';
