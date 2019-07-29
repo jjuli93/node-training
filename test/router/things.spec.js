@@ -1,34 +1,38 @@
+jest.mock('../../src/services/things');
+
 const request = require('supertest');
-const Koa = require('koa');
+const { initializeApp } = require('../../lib');
+
 const thingsService = require('../../src/services/things');
 const thingsRouter = require('../../src/router/things');
+const { thing1, thing2 } = require('../fixtures/things');
 
 describe('router/things', () => {
-  let app;
-  let server;
+  def('app', () => initializeApp({ router: thingsRouter }));
 
-  beforeEach(() => {
-    app = new Koa();
-    app.use(thingsRouter.routes());
-    server = app.listen();
-  });
+  def('server', () => get('app').listen());
 
   afterEach(() => {
-    server.close();
+    get('server').close();
   });
 
   describe('GET /', () => {
+    subject(() => request(get('server')).get('/'));
+
     it('sends the expected response', async () => {
-      jest.spyOn(thingsService, 'all').mockImplementation(() => []);
-      const response = await request(server).get('/');
+      thingsService.all.mockImplementation(() => [thing1, thing2]);
+
+      const response = await subject();
       expect(response.status).toBe(200);
-      expect(response.body).toEqual({ things: [] });
+      expect(response.body).toMatchObject({
+        things: [{ name: thing1.name }, { name: thing2.name }],
+      });
     });
   });
 
   describe('POST /', () => {
     subject(() =>
-      request(server)
+      request(get('server'))
         .post('/')
         .send(get('validBody')),
     );
@@ -37,11 +41,15 @@ describe('router/things', () => {
       def('validBody', () => ({ thing: { name: 'a', category_id: 1 } }));
 
       it('sends the expected response', async () => {
-        const serviceResponse = { name: 'a', category: { things: [] } };
-        jest.spyOn(thingsService, 'create').mockImplementation(() => serviceResponse);
+        const serviceResponse = {
+          ...thing1,
+          category: { name: 'catcat', things: [thing1, thing2] },
+        };
+        thingsService.create.mockImplementation(() => serviceResponse);
+
         const response = await subject();
         expect(response.status).toBe(200);
-        expect(response.body).toEqual(expect.objectContaining({ name: 'a' }));
+        expect(response.body).toMatchObject({ name: thing1.name, category: { name: 'catcat' } });
       });
     });
   });

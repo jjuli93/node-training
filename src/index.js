@@ -1,9 +1,13 @@
 require('dotenv').config();
 
-const { initializeApp } = require('../lib');
 const constants = require('./constants');
-const router = require('./router');
 
-const app = initializeApp({ router });
+const { initializeApp } = require('../lib');
+
+const router = require('./router');
+const errorCodeToStatusMap = require('./config/errorCodeToStatusMap');
+const knexfile = require('../knexfile');
+
+const app = initializeApp({ router, errorCodeToStatusMap, knexfile });
 
 app.listen(constants.PORT);

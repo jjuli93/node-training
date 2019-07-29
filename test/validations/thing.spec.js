@@ -1,43 +1,57 @@
 const Joi = require('joi');
+const { pick } = require('lodash');
 
 const thingValidation = require('../../src/validations/thing');
 const { thing1 } = require('../fixtures/things');
 
 describe('validations/thing', () => {
-  const itIsInvalid = (params) => {
+  const validThing = pick(thing1, ['name', 'category_id']);
+
+  subject(() => Joi.validate(get('params'), thingValidation));
+
+  const itIsInvalid = () => {
     it('is invalid', () => {
-      expect(Joi.validate(params, thingValidation).error).toBeTruthy();
+      expect(subject().error).toBeTruthy();
     });
   };
 
-  const itIsValid = (params) => {
+  const itIsValid = () => {
     it('is valid', () => {
-      expect(Joi.validate(params, thingValidation).error).toBeNull();
+      expect(subject().error).toBeNull();
     });
   };
 
-  it('is valid when the thing is correct', () => {
-    const result = Joi.validate({ ...thing1 }, thingValidation);
-    expect(result.error).toBeNull();
+  describe('when the thing is correct', () => {
+    def('params', () => validThing);
+
+    itIsValid();
   });
 
   describe('name', () => {
     describe('when it is not present', () => {
-      itIsInvalid({ ...thing1, name: undefined });
+      def('params', () => ({ ...validThing, name: undefined }));
+
+      itIsInvalid();
     });
 
     describe('when it is present', () => {
       describe('when it is not a string', () => {
-        itIsInvalid({ ...thing1, name: 123 });
+        def('params', () => ({ ...validThing, name: 123 }));
+
+        itIsInvalid();
       });
 
       describe('when it is a string', () => {
         describe('when its length is less than 3', () => {
-          itIsInvalid({ ...thing1, name: 'aa' });
+          def('params', () => ({ ...validThing, name: 'aa' }));
+
+          itIsInvalid();
         });
 
         describe('when its length is grater than or equal to 3', () => {
-          itIsValid({ ...thing1, name: 'aaa' });
+          def('params', () => ({ ...validThing, name: 'aaa' }));
+
+          itIsValid();
         });
       });
     });
@@ -45,20 +59,28 @@ describe('validations/thing', () => {
 
   describe('category_id', () => {
     describe('when it is not present', () => {
-      itIsInvalid({ ...thing1, category_id: undefined });
+      def('params', () => ({ ...validThing, category_id: undefined }));
+
+      itIsInvalid();
     });
 
     describe('when it is present', () => {
       describe('when it is not a number', () => {
-        itIsInvalid({ ...thing1, category_id: 'abc' });
+        def('params', () => ({ ...validThing, category_id: 'abc' }));
+
+        itIsInvalid();
       });
 
       describe('when it is a number', () => {
-        itIsValid({ ...thing1, category_id: 123 });
+        def('params', () => ({ ...validThing, category_id: 123 }));
+
+        itIsValid();
       });
 
       describe('when it is a string that represents number', () => {
-        itIsValid({ ...thing1, category_id: '123' });
+        def('params', () => ({ ...validThing, category_id: '123' }));
+
+        itIsValid();
       });
     });
   });
