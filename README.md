@@ -30,8 +30,6 @@ and remove the sample source code.
 ## Scripts
 - Start server on dev: `yarn run dev`
 - Run linter: `yarn run lint`
-- Run tests: `yarn run test`
-- Watch tests: `yarn run test-watch`
 - Run migrations: `npx knex migrate:latest`
 - Rollback migration: `npx knex migrate:rollback`
 - Make migration: `npx knex migrate:make migration_name`
@@ -41,6 +39,8 @@ and remove the sample source code.
 ## Running tests
 - Create test database `createdb things_test`
 - Migrate test database `npx knex migrate:latest --env test`
+- Run tests: `yarn run test`
+- Watch tests: `yarn run test-watch`
 
 ## Serializing your models
 To serialize a model, you need to create a serializer. It will specify how the model is going to be presented.
