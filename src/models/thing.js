@@ -5,6 +5,17 @@ class Thing extends Model {
     return 'things';
   }
 
+  static get modifiers() {
+    return {
+      active(builder) {
+        builder.where({ active: true });
+      },
+      inactive(builder) {
+        builder.where({ active: false });
+      },
+    };
+  }
+
   static get relationMappings() {
     const { Category } = require('./category'); //eslint-disable-line
 

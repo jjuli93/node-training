@@ -15,7 +15,7 @@ describe('services/things', () => {
     subject(() => thingsService.all());
 
     it('returns the list of things', async () => {
-      await knexConnection('things').insert({ category_id: category.id, name: 'a Name' });
+      await knexConnection('things').insert({ category_id: category.id, name: 'a Name', active: true });
       const things = await subject();
       expect(things).toMatchObject([{ name: 'a Name', category: { name: 'a Category' } }]);
     });

@@ -11,6 +11,7 @@ const THING_VALID_PARAMS = ['name', 'category_id'];
 
 const all = () =>
   Thing.query()
+    .modify('active')
     .returning('*')
     .eager('category.[things]');
 
