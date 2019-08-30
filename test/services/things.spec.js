@@ -12,12 +12,72 @@ describe('services/things', () => {
   });
 
   describe('all', () => {
-    subject(() => thingsService.all());
+    subject(() => thingsService.all(get('pageConfig')));
 
-    it('returns the list of things', async () => {
-      await knexConnection('things').insert({ category_id: category.id, name: 'a Name', active: true });
-      const things = await subject();
-      expect(things).toMatchObject([{ name: 'a Name', category: { name: 'a Category' } }]);
+    beforeEach(async () => {
+      const thingsToInsert = [
+        { category_id: category.id, name: 'a Name 1', active: true },
+        { category_id: category.id, name: 'Inacti 1', active: false },
+        { category_id: category.id, name: 'a Name 2', active: true },
+        { category_id: category.id, name: 'Inacti 2', active: false },
+        { category_id: category.id, name: 'a Name 3', active: true },
+      ];
+      await knexConnection('things').insert(thingsToInsert);
+    });
+
+    describe('when not passed a page config', () => {
+      def('pageConfig', () => undefined);
+
+      it('throws TypeError', () => {
+        expect(() => subject()).toThrow(
+          "Cannot destructure property `page` of 'undefined' or 'null'",
+        );
+      });
+    });
+
+    describe('when passed a page config', () => {
+      describe('when getting all the things', () => {
+        def('pageConfig', () => ({ page: 0, pageSize: 10 }));
+
+        it('returns the list of things (ignoring inactive) and the total things count', async () => {
+          const things = await subject();
+          expect(things).toMatchObject({
+            results: [
+              { name: 'a Name 1', category: { name: 'a Category' } },
+              { name: 'a Name 2', category: { name: 'a Category' } },
+              { name: 'a Name 3', category: { name: 'a Category' } },
+            ],
+            total: 3,
+          });
+        });
+      });
+
+      describe('when getting the first page (size 2)', () => {
+        def('pageConfig', () => ({ page: 0, pageSize: 2 }));
+
+        it('returns the list of things (ignoring inactive) and the total things count', async () => {
+          const things = await subject();
+          expect(things).toMatchObject({
+            results: [
+              { name: 'a Name 1', category: { name: 'a Category' } },
+              { name: 'a Name 2', category: { name: 'a Category' } },
+            ],
+            total: 3,
+          });
+        });
+      });
+
+      describe('when getting the second page (size 2)', () => {
+        def('pageConfig', () => ({ page: 1, pageSize: 2 }));
+
+        it('returns the list of things (ignoring inactive) and the total things count', async () => {
+          const things = await subject();
+          expect(things).toMatchObject({
+            results: [{ name: 'a Name 3', category: { name: 'a Category' } }],
+            total: 3,
+          });
+        });
+      });
     });
   });
 

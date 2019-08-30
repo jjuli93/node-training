@@ -5,19 +5,20 @@ const { ValidationError, CategoryNotFound } = require('../errors');
 
 const { Thing } = require('../models/thing');
 const { Category } = require('../models/category');
-const thingValidation = require('../validations/thing');
+const validations = require('../validations/thing');
 
 const THING_VALID_PARAMS = ['name', 'category_id'];
 
-const all = () =>
+const all = ({ page, pageSize }) =>
   Thing.query()
     .modify('active')
     .returning('*')
-    .eager('category.[things]');
+    .eager('category.[things]')
+    .page(page, pageSize);
 
 const create = async ({ thing }) => {
   const thingParams = pick(thing, THING_VALID_PARAMS);
-  const validationResult = Joi.validate(thingParams, thingValidation);
+  const validationResult = Joi.validate(thingParams, validations.create);
   if (validationResult.error) {
     throw new ValidationError({ details: validationResult.error.details });
   }

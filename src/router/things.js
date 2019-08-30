@@ -9,10 +9,10 @@ const thingsIndexSerializer = new ThingSerializer();
 
 router.get(
   '/',
-  withResponseMiddleware(
-    thingsIndexSerializer,
-    () => thingsService.all(),
-  ),
+  withResponseMiddleware(thingsIndexSerializer, (ctx) => thingsService.all(ctx.state.pageConfig), {
+    paged: true,
+    defaultPageSize: 20,
+  }),
 );
 
 const thingsShowSerializer = new ThingSerializer({
@@ -23,10 +23,7 @@ const thingsShowSerializer = new ThingSerializer({
 
 router.post(
   '/',
-  withResponseMiddleware(
-    thingsShowSerializer,
-    (ctx) => thingsService.create(ctx.request.body),
-  ),
+  withResponseMiddleware(thingsShowSerializer, (ctx) => thingsService.create(ctx.request.body)),
 );
 
 module.exports = router;

@@ -1,6 +1,7 @@
 # Node.js API skeleton
 
 ## Bootstrapping
+
 - Read the rest of this README.md
 - Follow the setup section
 - Run the tests
@@ -11,6 +12,7 @@ After all is setup & running, feel free to remove the local git repository and i
 and remove the sample source code.
 
 ## Stack
+
 - koa2 & friends
 - Objection.js
 - knex
@@ -18,6 +20,7 @@ and remove the sample source code.
 - PostgreSQL
 
 ## Setup
+
 - Create an `.env` file based on `.env.sample`
 - Install expected node version (.nvmrc)
 - Install dependencies `yarn install`
@@ -28,6 +31,7 @@ and remove the sample source code.
 # Usage
 
 ## Scripts
+
 - Start server on dev: `yarn run dev`
 - Run linter: `yarn run lint`
 - Run migrations: `npx knex migrate:latest`
@@ -37,6 +41,7 @@ and remove the sample source code.
 - Run seeds: `npx knex seed:run`
 
 ## Running tests
+
 - Create test database `createdb things_test`
 - Migrate test database `npx knex migrate:latest --env test`
 - Run tests: `yarn run test`
@@ -46,3 +51,4 @@ and remove the sample source code.
 
 - [Authentication](lib/authentication.md)
 - [Serializer](lib/serializer.md)
+- [Pagination](lib/middlewares.md)
