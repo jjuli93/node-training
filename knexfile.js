@@ -8,6 +8,8 @@ module.exports = {
       database: process.env.DATABASE,
       user: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
+      host: process.env.DATABASE_HOST,
+      port: process.env.DATABASE_PORT,
     },
     pool: {
       min: 2,
@@ -21,6 +23,8 @@ module.exports = {
       database: 'things_test',
       user: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
+      host: process.env.DATABASE_HOST,
+      port: process.env.DATABASE_PORT,
     },
     pool: {
       min: 2,
@@ -34,6 +38,8 @@ module.exports = {
       database: process.env.DATABASE,
       user: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
+      host: process.env.DATABASE_HOST,
+      port: process.env.DATABASE_PORT,
     },
     pool: {
       min: 2,
