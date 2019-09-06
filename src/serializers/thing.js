@@ -23,7 +23,10 @@ class ThingSerializer extends Serializer {
   // functions that are used as custom attributes should always receive the
   // entity object as a parameter
   static reverseName(object) {
-    return object.name.split('').reverse().join('');
+    return object.name
+      .split('')
+      .reverse()
+      .join('');
   }
 }
 

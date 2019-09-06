@@ -1,12 +1,11 @@
 module.exports = {
-  extends: 'airbnb-base',
+  extends: ['airbnb-base', 'prettier'],
+  plugins: ['prettier'],
   env: {
     node: true,
     jest: true,
   },
   rules: {
-    'arrow-parens': 'off',
-    'implicit-arrow-linebreak': 'off',
-    'function-paren-newline': 'off',
+    'prettier/prettier': ['error'],
   },
 };

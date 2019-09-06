@@ -10,7 +10,10 @@ const knexfile = require('../knexfile');
 const passportStrategies = require('./passport/strategies');
 
 const app = initializeApp({
-  router, errorCodeToStatusMap, knexfile, passportStrategies,
+  router,
+  errorCodeToStatusMap,
+  knexfile,
+  passportStrategies,
 });
 
 app.listen(constants.PORT);
