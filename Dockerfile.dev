@@ -15,9 +15,9 @@ RUN npm install
 EXPOSE 3000
 
 # Add a script to be executed every time the container starts.
-COPY docker-entrypoint.sh /usr/bin/
+COPY entrypoint.sh /usr/bin/
 COPY wait-for-it.sh /usr/bin/
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["entrypoint.sh"]
 
 CMD [ "npm", "run", "dev" ]
