@@ -23,7 +23,7 @@ and remove the sample source code.
 
 - Create an `.env` file based on `.env.sample`
 - Install expected node version (.nvmrc)
-- Install dependencies `yarn install`
+- Install dependencies `npm install`
 - Create the database `createdb database_name`
 - Run migrations `npx knex migrate:latest`
 - Run seeds `npx knex seed:run`
@@ -32,8 +32,8 @@ and remove the sample source code.
 
 ## Scripts
 
-- Start server on dev: `yarn run dev`
-- Run linter: `yarn run lint`
+- Start server on dev: `npm run dev`
+- Run linter: `npm run lint`
 - Run migrations: `npx knex migrate:latest`
 - Rollback migration: `npx knex migrate:rollback`
 - Make migration: `npx knex migrate:make migration_name`
@@ -44,8 +44,8 @@ and remove the sample source code.
 
 - Create test database `createdb things_test`
 - Migrate test database `npx knex migrate:latest --env test`
-- Run tests: `yarn run test`
-- Watch tests: `yarn run test-watch`
+- Run tests: `npm run test`
+- Watch tests: `npm run test-watch`
 
 ## Specific Documentation
 
