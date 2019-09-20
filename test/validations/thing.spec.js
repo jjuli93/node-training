@@ -1,4 +1,3 @@
-const Joi = require('joi');
 const { pick } = require('lodash');
 
 const thingValidations = require('../../src/validations/thing');
@@ -8,7 +7,7 @@ describe('validations/thing', () => {
   describe('create', () => {
     const validThing = pick(thing1, ['name', 'category_id']);
 
-    subject(() => Joi.validate(get('params'), thingValidations.create));
+    subject(() => thingValidations.create.validate(get('params')));
 
     const itIsInvalid = () => {
       it('is invalid', () => {
@@ -18,7 +17,7 @@ describe('validations/thing', () => {
 
     const itIsValid = () => {
       it('is valid', () => {
-        expect(subject().error).toBeNull();
+        expect(subject().error).toBeUndefined();
       });
     };
 

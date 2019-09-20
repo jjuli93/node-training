@@ -1,4 +1,3 @@
-const Joi = require('joi');
 const { pick } = require('lodash');
 
 const { ValidationError, CategoryNotFound } = require('../errors');
@@ -18,7 +17,7 @@ const all = ({ page, pageSize }) =>
 
 const create = async ({ thing }) => {
   const thingParams = pick(thing, THING_VALID_PARAMS);
-  const validationResult = Joi.validate(thingParams, validations.create);
+  const validationResult = validations.create.validate(thingParams);
   if (validationResult.error) {
     throw new ValidationError({ details: validationResult.error.details });
   }

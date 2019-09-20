@@ -14,8 +14,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^16.1.2",
     "dotenv": "^6.2.0",
-    "joi": "^14.3.1",
     "knex": "^0.16.3",
     "knex-cleaner": "^1.1.4",
     "koa": "^2.6.2",
