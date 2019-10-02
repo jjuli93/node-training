@@ -1,10 +1,10 @@
 require('dotenv').config();
 
-module.exports = {
-  [process.env.NODE_ENV]: {
+const makeConfig = (enviroment) => {
+  return {
     client: 'postgresql',
     connection: {
-      database: `${process.env.DATABASE}_${process.env.NODE_ENV}`,
+      database: `${process.env.DATABASE}_${enviroment}`,
       user: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       host: process.env.DATABASE_HOST,
@@ -14,5 +14,10 @@ module.exports = {
       min: 2,
       max: 10,
     },
-  },
+  };
+};
+
+module.exports = {
+  development: makeConfig('development'),
+  test: makeConfig('test'),
 };

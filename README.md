@@ -24,7 +24,7 @@ and remove the sample source code.
 - Create an `.env` file based on `.env.sample`
 - Install expected node version (.nvmrc)
 - Install dependencies `npm install`
-- Create the database `createdb database_name`
+- Create the database `createdb <env.DATABASE>_development` where <env.DATABASE> is the DATABASE key in the .env file
 - Run migrations `npx knex migrate:latest`
 - Run seeds `npx knex seed:run`
 
@@ -42,7 +42,7 @@ and remove the sample source code.
 
 ## Running tests
 
-- Create test database `createdb things_test`
+- Create test database `createdb <env.DATABASE>_test` where <env.DATABASE> is the DATABASE key in the .env file
 - Migrate test database `npx knex migrate:latest --env test`
 - Run tests: `npm run test`
 - Watch tests: `npm run test-watch`
