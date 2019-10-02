@@ -1,7 +1,10 @@
 const Router = require('koa-router');
-const thingsService = require('../services/things');
+const thingsLib = require('../lib/things');
+const categoriesLib = require('../lib/categories');
 const { withResponseMiddleware } = require('../../lib');
-const { ThingSerializer, CategorySerializer } = require('../serializers');
+
+const { ThingSerializer } = thingsLib;
+const { CategorySerializer } = categoriesLib;
 
 const router = new Router();
 
@@ -12,7 +15,7 @@ router.get(
   withResponseMiddleware(
     thingsIndexSerializer,
     (ctx) => {
-      return thingsService.all({ pageConfig: ctx.state.pageConfig, ids: ctx.query.ids });
+      return thingsLib.all({ pageConfig: ctx.state.pageConfig, ids: ctx.query.ids });
     },
     {
       paged: true,
@@ -29,7 +32,7 @@ const thingsShowSerializer = new ThingSerializer({
 
 router.post(
   '/',
-  withResponseMiddleware(thingsShowSerializer, (ctx) => thingsService.create(ctx.request.body)),
+  withResponseMiddleware(thingsShowSerializer, (ctx) => thingsLib.create(ctx.request.body)),
 );
 
 module.exports = router;

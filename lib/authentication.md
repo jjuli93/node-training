@@ -62,7 +62,7 @@ module.exports = {
 - return the signed jwt
 
 ```js
-// src/router/auth.js
+// src/web/auth.router.js
 const Router = require('koa-router');
 const jwt = require('jsonwebtoken');
 
@@ -219,7 +219,7 @@ module.exports = requireAdmin;
 Example route, only accessible if isAdmin === true:
 
 ```js
-// src/router/admin.js
+// src/web/admin.router.js
 const Router = require('koa-router');
 
 const router = new Router();
@@ -234,12 +234,12 @@ module.exports = router;
 Use the composed middleware in the admin routes:
 
 ```js
-// src/router/index.js
+// src/web/index.js
 const Router = require('koa-router');
 
 const requireAdmin = require('../middlewares/requireAdmin');
 
-const adminRouter = require('./admin');
+const adminRouter = require('./admin.router');
 
 const apiRouter = new Router({ prefix: '/api' });
 

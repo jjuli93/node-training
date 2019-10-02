@@ -1,8 +1,8 @@
-const { ValidationError, CategoryNotFound } = require('../../src/errors');
-const thingsService = require('../../src/services/things');
-const { knexConnection } = require('../knexTestHelper');
+const { ValidationError, CategoryNotFound } = require('../../../src/errors');
+const thingsService = require('../../../src/lib/things/things.service');
+const { knexConnection } = require('../../knexTestHelper');
 
-describe('services/things', () => {
+describe('things/service', () => {
   let category;
 
   beforeEach(async () => {

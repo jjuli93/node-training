@@ -1,14 +1,14 @@
-jest.mock('../../src/services/things');
+jest.mock('../../src/lib/things/things.service');
 
 const request = require('supertest');
 const qs = require('qs');
 const { initializeApp } = require('../../lib');
 
-const thingsService = require('../../src/services/things');
-const thingsRouter = require('../../src/router/things');
+const thingsService = require('../../src/lib/things/things.service');
+const thingsRouter = require('../../src/web/things.router');
 const { thing1, thing2 } = require('../fixtures/things');
 
-describe('router/things', () => {
+describe('things/router', () => {
   def('app', () => initializeApp({ router: thingsRouter }));
 
   def('server', () => get('app').listen());

@@ -1,7 +1,7 @@
-const ThingSerializer = require('../../src/serializers/thing');
-const CategorySerializer = require('../../src/serializers/category');
+const { ThingSerializer } = require('../../../src/lib/things');
+const { CategorySerializer } = require('../../../src/lib/categories');
 
-describe('serializers/things', () => {
+describe('things/serializer', () => {
   const serviceOutput = {
     name: 't_1',
     irrelevant: 'value',

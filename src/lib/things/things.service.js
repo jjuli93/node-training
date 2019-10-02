@@ -1,10 +1,11 @@
 const { pick } = require('lodash');
 
-const { ValidationError, CategoryNotFound } = require('../errors');
+const { ValidationError, CategoryNotFound } = require('../../errors');
 
-const { Thing } = require('../models/thing');
-const { Category } = require('../models/category');
-const validations = require('../validations/thing');
+const { Thing } = require('./things.model');
+const { Category } = require('../categories');
+
+const validations = require('./things.validations');
 
 const THING_VALID_PARAMS = ['name', 'category_id'];
 

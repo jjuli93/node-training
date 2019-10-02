@@ -17,7 +17,7 @@ class Thing extends Model {
   }
 
   static get relationMappings() {
-    const { Category } = require('./category'); //eslint-disable-line
+    const { Category } = require('../categories/categories.model'); //eslint-disable-line
 
     return {
       category: {

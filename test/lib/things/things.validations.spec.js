@@ -1,9 +1,9 @@
 const { pick } = require('lodash');
 
-const thingValidations = require('../../src/validations/thing');
-const { thing1 } = require('../fixtures/things');
+const thingValidations = require('../../../src/lib/things/things.validations');
+const { thing1 } = require('../../fixtures/things');
 
-describe('validations/thing', () => {
+describe('things/validations', () => {
   describe('create', () => {
     const validThing = pick(thing1, ['name', 'category_id']);
 
