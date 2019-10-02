@@ -12,7 +12,9 @@ describe('services/things', () => {
   });
 
   describe('all', () => {
-    subject(() => thingsService.all(get('pageConfig')));
+    def('thingIds', () => undefined);
+
+    subject(() => thingsService.all({ pageConfig: get('pageConfig'), ids: get('thingIds') }));
 
     beforeEach(async () => {
       const thingsToInsert = [
@@ -21,6 +23,8 @@ describe('services/things', () => {
         { category_id: category.id, name: 'a Name 2', active: true },
         { category_id: category.id, name: 'Inacti 2', active: false },
         { category_id: category.id, name: 'a Name 3', active: true },
+        { category_id: category.id, name: 'a Name 4', active: true },
+        { category_id: category.id, name: 'a Name 5', active: true },
       ];
       await knexConnection('things').insert(thingsToInsert);
     });
@@ -46,8 +50,10 @@ describe('services/things', () => {
               { name: 'a Name 1', category: { name: 'a Category' } },
               { name: 'a Name 2', category: { name: 'a Category' } },
               { name: 'a Name 3', category: { name: 'a Category' } },
+              { name: 'a Name 4', category: { name: 'a Category' } },
+              { name: 'a Name 5', category: { name: 'a Category' } },
             ],
-            total: 3,
+            total: 5,
           });
         });
       });
@@ -62,7 +68,7 @@ describe('services/things', () => {
               { name: 'a Name 1', category: { name: 'a Category' } },
               { name: 'a Name 2', category: { name: 'a Category' } },
             ],
-            total: 3,
+            total: 5,
           });
         });
       });
@@ -73,8 +79,46 @@ describe('services/things', () => {
         it('returns the list of things (ignoring inactive) and the total things count', async () => {
           const things = await subject();
           expect(things).toMatchObject({
-            results: [{ name: 'a Name 3', category: { name: 'a Category' } }],
-            total: 3,
+            results: [
+              { name: 'a Name 3', category: { name: 'a Category' } },
+              { name: 'a Name 4', category: { name: 'a Category' } },
+            ],
+            total: 5,
+          });
+        });
+      });
+
+      describe('when passed an array of 5 ids', () => {
+        def('thingIds', () => [1, 2, 3, 4, 5]);
+
+        describe('and a pageSize of 10', () => {
+          def('pageConfig', () => ({ page: 0, pageSize: 10 }));
+
+          it('returns those things (ignoring inactive)', async () => {
+            const things = await subject();
+            expect(things).toMatchObject({
+              results: [
+                { name: 'a Name 1', category: { name: 'a Category' } },
+                { name: 'a Name 2', category: { name: 'a Category' } },
+                { name: 'a Name 3', category: { name: 'a Category' } },
+              ],
+              total: 3,
+            });
+          });
+        });
+
+        describe('and a pageSize of 2', () => {
+          def('pageConfig', () => ({ page: 0, pageSize: 2 }));
+
+          it('returns those things (ignoring inactive)', async () => {
+            const things = await subject();
+            expect(things).toMatchObject({
+              results: [
+                { name: 'a Name 1', category: { name: 'a Category' } },
+                { name: 'a Name 2', category: { name: 'a Category' } },
+              ],
+              total: 3,
+            });
           });
         });
       });

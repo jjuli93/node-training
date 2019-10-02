@@ -8,12 +8,18 @@ const validations = require('../validations/thing');
 
 const THING_VALID_PARAMS = ['name', 'category_id'];
 
-const all = ({ page, pageSize }) =>
-  Thing.query()
+const all = ({ pageConfig: { page, pageSize }, ids = null }) => {
+  return Thing.query()
+    .modify((qb) => {
+      if (Array.isArray(ids)) {
+        qb.findByIds(ids);
+      }
+    })
     .modify('active')
     .returning('*')
     .eager('category.[things]')
     .page(page, pageSize);
+};
 
 const create = async ({ thing }) => {
   const thingParams = pick(thing, THING_VALID_PARAMS);

@@ -9,10 +9,16 @@ const thingsIndexSerializer = new ThingSerializer();
 
 router.get(
   '/',
-  withResponseMiddleware(thingsIndexSerializer, (ctx) => thingsService.all(ctx.state.pageConfig), {
-    paged: true,
-    defaultPageSize: 20,
-  }),
+  withResponseMiddleware(
+    thingsIndexSerializer,
+    (ctx) => {
+      return thingsService.all({ pageConfig: ctx.state.pageConfig, ids: ctx.query.ids });
+    },
+    {
+      paged: true,
+      defaultPageSize: 20,
+    },
+  ),
 );
 
 const thingsShowSerializer = new ThingSerializer({
