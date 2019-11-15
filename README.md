@@ -31,12 +31,18 @@ and remove the sample source code.
 
 ## Scripts
 
+## Hygen code generators
+- To generate an entity scaffold: `npx hygen generate scaffold`
+
 - Start server on dev: `npm run dev`
 - Run linter: `npm run lint`
+
+- Make migration: `npx hygen generate migration`
 - Run migrations: `npx knex migrate:latest`
 - Rollback migration: `npx knex migrate:rollback`
-- Make migration: `npx knex migrate:make migration_name`
-- Make seed: `npx knex seed:make seed_name`
+
+
+- Make seed: `npx hygen generate seed`
 - Run seeds: `npx knex seed:run`
 
 ## Running tests

@@ -7,5 +7,9 @@ module.exports = {
   },
   rules: {
     'prettier/prettier': ['error'],
+    'import/no-extraneous-dependencies': [
+      'error',
+      { devDependencies: ['_templates/**'] },
+    ],
   },
 };
