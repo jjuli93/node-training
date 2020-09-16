@@ -29,7 +29,7 @@ and remove the sample source code.
 
 ### Database Setup
 
-When configureing the database you can either setup the database depending on the environment, using
+When configuring the database you can either setup the database depending on the environment, using
 `DATABASE` if you use this configuration a database with that string plus the environment is going
 to be created ex. `awesome_development`, or you can use `DATABASE_NAME` and that will directly use
 that string (this is useful for production environments where you want to just set the name of the
