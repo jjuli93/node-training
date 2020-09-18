@@ -1,0 +1,22 @@
+version: '3.5'
+
+services:
+  db:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: node_template
+
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile.local
+    volumes:
+      - $PWD:/app/
+      - /app/node_modules
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    depends_on:
+      - db

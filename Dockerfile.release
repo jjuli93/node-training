@@ -2,49 +2,43 @@
 # Application Build       #
 ###########################
 
-FROM node:12-alpine as builder
+FROM node:14-alpine AS builder
 
 RUN apk add --virtual build-dependencies git bash curl
 
-WORKDIR /opt
+WORKDIR /app
 
 # Copy dependency manifest files
-COPY package*.json ./
-
-# Fix "could not get uid/gid [ 'nobody', 0 ]" errors
-RUN npm config set unsafe-perm true
+COPY package.json yarn.lock ./
 
 # Install app dependencies
-# Cleanup
-ENV NPM_CONFIG_LOGLEVEL warn
-ENV NODE_ENV production
-
-RUN npm install --production \
+# Clean up
+RUN yarn install --production \
   && curl -sfL https://install.goreleaser.com/github.com/tj/node-prune.sh | bash -s -- -b /usr/local/bin \
   && /usr/local/bin/node-prune \
   && apk del build-dependencies \
   && rm -rf /var/cache/apk/*
 
+# Copy project folders
+COPY . .
+
+# Build the applicaiton
+RUN yarn run build
+
 ###########################
 # Application Final Image #
 ###########################
 
-FROM node:12-alpine
+FROM node:14-alpine
 
-WORKDIR /opt
+WORKDIR /app
 
-# Install app dependencies
-ENV NPM_CONFIG_LOGLEVEL warn
 ENV NODE_ENV production
 
 # Install node process manager
 RUN npm install pm2 -g
 
-# Copy dependencies
-COPY --from=builder /opt/node_modules ./node_modules
-
-# Copy project files
-COPY . .
+COPY --from=builder /app/ .
 
 EXPOSE 3000
 

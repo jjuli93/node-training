@@ -1,64 +1,164 @@
-# Node.js API skeleton
+# Node.js API template
 
 ## Bootstrapping
 
 - Read the rest of this README.md
-- Follow the setup section
+- Follow the `Start project` section
 - Run the tests
 - Start the server
 
-After all is setup & running, feel free to remove the local git repository and initialize a new one, rename databases,
-and remove the sample source code.
+After all is setup & running, feel free to remove the local git repository and initialize a new one,
+rename databases, and remove the sample source code.
 
 ## Stack
 
-- koa2 & friends
-- Objection.js
-- knex
-- jest
-- PostgreSQL
+This section is going to show a curated list of the packages and tools used for this project (to see
+the full list of dependencies take a look at `package.json`)
 
-## Setup
+* [Koa](https://koajs.com/)
+* [Koa Router](https://github.com/koajs/router)
+* [Koa CORS](https://github.com/koajs/cors)
+* [Koa Passport](https://github.com/rkusa/koa-passport)
+* [Koa Bodyparser](https://github.com/koajs/bodyparser)
+* [Objection.js](https://vincit.github.io/objection.js/)
+* [knex](http://knexjs.org/)
+* [Jest](https://jestjs.io/)
+* [PostgreSQL](https://www.postgresql.org/)
+* [Docker](https://www.docker.com/)
+* [Docker Compose](https://docs.docker.com/compose/)
+* [Git](https://git-scm.com/)
 
-- Create an `.env` file based on `.env.sample`
-- Install expected node version (.nvmrc)
-- Install dependencies `npm install`
-- Create the database `createdb <env.DATABASE>_development` where <env.DATABASE> is the DATABASE key in the .env file
-- Run migrations `npx knex migrate:latest`
-- Run seeds `npx knex seed:run`
+# Start project
 
-### Database Setup
+## Start project with docker (recommended)
 
-When configuring the database you can either setup the database depending on the environment, using
-`DATABASE` if you use this configuration a database with that string plus the environment is going
-to be created ex. `awesome_development`, or you can use `DATABASE_NAME` and that will directly use
-that string (this is useful for production environments where you want to just set the name of the
-database and not depend on the environment).
+In order to start the project with docker you just need to execute the following script (you should
+have docker already installed and working on your machine)
 
-# Usage
+```
+./bin/start
+```
 
-## Scripts
+The script assumes that you have a `.env.sample` file that file is going to be copied to a file
+with the name `.env` and it's going to be used to start the application
 
-## Hygen code generators
+## Start project manually
+
+The following files needs to be copied and modified accordingly
+
+```
+$ cp .env.sample .env
+```
+
+After copy those files edit them to have the right values (ask a teammate if you don't know any of
+those values), then you will need to create the database to do Postres is required to be up and
+running (if you have it you can avoid the installation instructions for Postgres)
+
+### Install tools
+
+#### PostgreSQL
+
+The easiest way to install postres is using this [app](https://postgresapp.com/), just follow the
+instructions on their site and you will be ready to go (you might need to reload the terminal
+to have access to postgres app commands)
+
+#### Version manager
+
+To install all the tools required by the project you need a tool to manage the version of
+the tools. Using `asdf-vm` you can install all the tools, to install it you need to
+follow the instructions on https://asdf-vm.com/
+
+#### Node.js
+
+If you want to manage node versions using asdf you need to install a plugin that is able to install
+the different node versions, to do that just type the following command
+
+```
+$ asdf plugin add nodejs
+```
+
+And then to install nodejs run the following command
+
+```
+$ asdf install nodejs 14.0.0
+```
+
+
+### Install project dependencies
+
+```
+$ yarn install
+```
+
+### Create database
+
+Based on the information on the file `.env` (that you copy previously) create two
+databases on for `test` and one for `development` to do that just run the following command
+
+```
+$ createdb node_template_development
+$ createdb node_template_test
+```
+
+Make sure those names matches what you have on `.env`
+
+### Migrate and seed database
+
+In order to have the latest schema on your database you need to run the following command:
+
+```
+$ npx knex migrate:latest
+```
+
+Then to create some seed data for development the following command could be run:
+
+```
+$ npx knex seed:run
+```
+
+### Start the project
+
+```
+$ yarn run dev
+```
+
+This command will start a dev server and every change that is made to the code is reflected on the
+terminal, that is running the code.
+
+By default it will start the server port 3000, if you need to start the server on a different port
+use the following command instead.
+
+```
+$ yarn run dev -- -p [PORT]
+```
+
+Where [PORT] is the port that you want to use for running the server
+
+## Usage
+
+### Scripts
+
+### Code generators
+
 - To generate an entity scaffold: `npx hygen generate scaffold`
-
-- Start server on dev: `npm run dev`
-- Run linter: `npm run lint`
-
 - Make migration: `npx hygen generate migration`
-- Run migrations: `npx knex migrate:latest`
-- Rollback migration: `npx knex migrate:rollback`
-
-
 - Make seed: `npx hygen generate seed`
-- Run seeds: `npx knex seed:run`
 
-## Running tests
+### Running tests
 
-- Create test database `createdb <env.DATABASE>_test` where <env.DATABASE> is the DATABASE key in the .env file
-- Migrate test database `npx knex migrate:latest --env test`
-- Run tests: `npm run test`
-- Watch tests: `npm run test-watch`
+To run the test just type the following command
+
+```
+$ yarn run test
+```
+
+### ESLint & Prettier
+
+To run the linter and fix try to fix issues automatically run the following command
+
+```
+$ yarn run lint -- --fix
+```
 
 ## Specific Documentation
 

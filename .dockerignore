@@ -16,6 +16,9 @@ cloudbuild.yml
 .env.sample
 .tool-versions
 
+# Git files
+.git/
+
 # Project files
 postman/
 test
