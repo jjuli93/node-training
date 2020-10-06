@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Delete model, test, and migration
+rm -rf ./migrations/20201002123129_create_things.js ./src/lib/things ./test/lib/things

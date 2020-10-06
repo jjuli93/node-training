@@ -160,6 +160,15 @@ To run the linter and fix try to fix issues automatically run the following comm
 $ yarn run lint -- --fix
 ```
 
+### Cleanup template files
+
+The template has some example files like models, migrations, and tests for those models once you are
+comfortable with the template you can execute the following script to clean up the template:
+
+```
+$ ./bin/cleanup
+```
+
 ## Specific Documentation
 
 - [Authentication](lib/authentication.md)
