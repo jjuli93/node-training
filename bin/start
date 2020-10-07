@@ -49,6 +49,8 @@ fi
 
 if [[ "$@" =~ --release ]]; then
   ENV_ARG="-f docker-compose.release.yml"
+else
+  ENV_ARG="-f docker-compose.local.yml"
 fi
 
 # Check configurations
