@@ -102,20 +102,6 @@ $ createdb node_template_test
 
 Make sure those names matches what you have on `.env`
 
-### Migrate and seed database
-
-In order to have the latest schema on your database you need to run the following command:
-
-```
-$ npx knex migrate:latest
-```
-
-Then to create some seed data for development the following command could be run:
-
-```
-$ npx knex seed:run
-```
-
 ### Start the project
 
 ```
@@ -135,6 +121,30 @@ $ yarn run dev -- -p [PORT]
 Where [PORT] is the port that you want to use for running the server
 
 ## Usage
+
+### Migrate and seed database
+
+If you are running the project with **docker**, first you need to enter to the terminal (inside the
+container), to do that just type the following command on your shell:
+
+```
+$ ./bin/terminal
+```
+
+Once you are there you can use the following commands to either migrate or seed the database, for
+none **docker** users just type the commands directly on the root of the project.
+
+In order to have the latest schema on your database you need to run the following command:
+
+```
+$ npx knex migrate:latest
+```
+
+Then to create some seed data for development the following command could be run:
+
+```
+$ npx knex seed:run
+```
 
 ### Scripts
 
