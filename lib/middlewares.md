@@ -26,7 +26,7 @@ In the service, the objection page modifier can be used
 const all = ({ page, pageSize }) =>
   Thing.query()
     .returning('*')
-    .eager('category.[things]')
+    .withGraphFetched('category.[things]')
     .page(page, pageSize);
 ```
 
