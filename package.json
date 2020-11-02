@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --inspect src",
     "lint": "eslint .",
-    "test": "jest --runInBand --config=jest.config.js",
+    "test": "knex migrate:latest --env test && jest --runInBand --config=jest.config.js",
     "check-staged": "lint-staged"
   },
   "author": "",

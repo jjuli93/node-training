@@ -156,12 +156,6 @@ $ npx knex seed:run
 
 ### Running tests
 
-Make sure to migrate the test database with the following command
-
-```
-$ npx knex migrate:latest --env test
-```
-
 To run the test just type the following command
 
 ```
