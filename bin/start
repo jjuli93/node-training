@@ -24,6 +24,16 @@ function check_base_config {
   fi
 }
 
+function check_database_host {
+  if ! grep -Fxq 'DATABASE_HOST=db' $CONFIG
+  then
+    echo "ATTENTION: ***************************************"
+    read -e -p "No local DATABASE_HOST configured. CONTINUE? [N/y] " choice
+    choice=${choice:-N}
+    [[ $choice =~ [^Yy] ]] && exit 1
+  fi
+}
+
 function check_docker {
   docker -v > /dev/null 2>&1
 
@@ -56,6 +66,10 @@ fi
 # Check configurations
 
 check_base_config
+
+# Check DATABASE_HOST use local database
+
+check_database_host
 
 # Check dependencies
 
