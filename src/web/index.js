@@ -1,4 +1,4 @@
-const Router = require('koa-router');
+const Router = require('@koa/router');
 const thingsRouter = require('./things.router.sample'); // bin/cleanup mark
 
 const apiRouter = new Router({ prefix: '/api' });

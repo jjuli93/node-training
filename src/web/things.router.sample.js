@@ -1,4 +1,4 @@
-const Router = require('koa-router');
+const Router = require('@koa/router');
 const thingsLib = require('../lib/things.sample');
 const categoriesLib = require('../lib/categories.sample');
 const { withResponseMiddleware } = require('../../lib');
