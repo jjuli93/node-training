@@ -22,7 +22,9 @@ const localStrategy = new LocalStrategy(
   },
 );
 
-module.exports = [localStrategy];
+module.exports = [
+  { alias: 'local', concreteStrategy: localStrategy },
+];
 ```
 
 ### 2) Pass the local strategy to initializeApp
@@ -120,7 +122,10 @@ const jwtStrategy = new JwtStrategy(jwtStrategyOptions, (jwtPayload, done) => {
   done(null, jwtPayload);
 });
 
-module.exports = [localStrategy, jwtStrategy];
+module.exports = [
+  { alias: 'local', concreteStrategy: localStrategy },
+  { alias: 'jwt', concreteStrategy: jwtStrategy },
+];
 ```
 
 - Make sure its being passed to `initializeApp`

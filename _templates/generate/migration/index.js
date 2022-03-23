@@ -1,5 +1,5 @@
 const inflection = require('inflection');
-const moment = require('moment');
+const dayjs = require('dayjs');
 
 module.exports = {
   prompt: async ({ prompter }) => {
@@ -12,7 +12,7 @@ module.exports = {
     migrationName = inflection.underscore(migrationName.replace(/ /g, '_').replace(/[^\w]/g, ''));
 
     return {
-      fileName: `${moment().format('YYYYMMDDHHmmss')}_${migrationName}`,
+      fileName: `${dayjs().format('YYYYMMDDHHmmss')}_${migrationName}`,
     };
   },
 };

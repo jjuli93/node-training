@@ -16,8 +16,6 @@ services:
     volumes:
       - $PWD:/app/
       - /app/node_modules
-    expose:
-      - 3000
     ports:
       - 3000:3000
     depends_on:

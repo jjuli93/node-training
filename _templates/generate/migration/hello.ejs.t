@@ -1,10 +1,10 @@
 ---
 to: migrations/<%= fileName %>.js
 ---
-exports.up = (knex) => {
-  return Promise.resolve();
+exports.up = async (knex) => {
+
 };
 
-exports.down = (knex) => {
-  return Promise.resolve();
+exports.down = async (knex) => {
+
 };

@@ -4,12 +4,13 @@ const request = require('supertest');
 const qs = require('qs');
 const { initializeApp } = require('../../lib');
 
+const errorCodeToStatusMap = require('../../src/config/errorCodeToStatusMap');
 const thingsService = require('../../src/lib/things.sample/things.service');
 const thingsRouter = require('../../src/web/things.router.sample');
 const { thing1, thing2 } = require('../fixtures/things.sample');
 
 describe('things/router', () => {
-  def('app', () => initializeApp({ router: thingsRouter }));
+  def('app', () => initializeApp({ router: thingsRouter, errorCodeToStatusMap }));
 
   def('server', () => get('app').listen());
 
@@ -68,6 +69,18 @@ describe('things/router', () => {
         });
 
         itSendsExpectedResponse({ page: 2, pageSize: 5 });
+      });
+
+      describe('when invalid pagination parameters are passed', () => {
+        def('query', () => ({ page: 'hola', pageSize: 5 }));
+
+        it('throws a validation error', async () => {
+          const response = await subject();
+          expect(response.status).toBe(400);
+          expect(response.body).toEqual({
+            error: { details: '"page" must be a number' },
+          });
+        });
       });
 
       describe('when ids are passed in bracket format (ids[]=123&ids[]=234)', () => {
