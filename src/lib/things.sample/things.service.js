@@ -1,4 +1,4 @@
-const { pick } = require('../helpers/pick');
+const { pick } = require('../../utils/pick');
 
 const { ValidationError, CategoryNotFound } = require('../../errors');
 

@@ -178,3 +178,4 @@ $ ./bin/cleanup
 - [Authentication](lib/authentication.md)
 - [Serializer](lib/serializer.md)
 - [Pagination](lib/middlewares.md)
+- [Logging](lib/logging.md)

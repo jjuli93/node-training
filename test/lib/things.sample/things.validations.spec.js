@@ -1,4 +1,4 @@
-const { pick } = require('../../../src/lib/helpers/pick');
+const { pick } = require('../../../src/utils/pick');
 
 const thingValidations = require('../../../src/lib/things.sample/things.validations');
 const { thing1 } = require('../../fixtures/things.sample');
