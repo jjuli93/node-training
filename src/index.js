@@ -3,6 +3,7 @@ require('dotenv').config();
 const constants = require('./constants');
 
 const { initializeApp } = require('../lib');
+const { logger } = require('../lib/initializers/logger');
 
 const router = require('./web');
 const errorCodeToStatusMap = require('./config/errorCodeToStatusMap');
@@ -19,3 +20,4 @@ const app = initializeApp({
 });
 
 app.listen(constants.PORT);
+logger.info(`Server listening on port ${constants.PORT}!`);

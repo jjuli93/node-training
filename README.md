@@ -111,14 +111,8 @@ $ yarn run dev
 This command will start a dev server and every change that is made to the code is reflected on the
 terminal, that is running the code.
 
-By default it will start the server port 3000, if you need to start the server on a different port
-use the following command instead.
-
-```
-$ yarn run dev -- -p [PORT]
-```
-
-Where [PORT] is the port that you want to use for running the server
+By default it will start the server port 3000.
+If you want to run the server in a different port, update the PORT environment variable
 
 ## Usage
 

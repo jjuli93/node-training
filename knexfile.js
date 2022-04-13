@@ -1,10 +1,11 @@
 require('dotenv').config();
 
-const makeConfig = (enviroment) => {
+const makeConfig = (environment) => {
+  const databaseName = environment === 'test' ? null : process.env.DATABASE_NAME;
   return {
     client: 'postgresql',
     connection: {
-      database: process.env.DATABASE_NAME || `${process.env.DATABASE}_${enviroment}`,
+      database: databaseName || `${process.env.DATABASE}_${environment}`,
       user: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       host: process.env.DATABASE_HOST,
