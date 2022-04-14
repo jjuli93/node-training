@@ -1,8 +1,7 @@
 #!/bin/bash
 
 echo "Files to be deleted:"
-find ./migrations -name '*.sample*'
-find ./seeds -name '*.sample*'
+find ./database -name '*.sample*'
 find ./src -name '*.sample*'
 find ./test -name '*.sample*'
 find . -name 'API.sample.md'
@@ -17,8 +16,7 @@ while true; do
   case $yn in
       [Yy] )
         echo "Deleting files..."
-        find ./migrations -name '*.sample*' -exec rm -rf {} +
-        find ./seeds -name '*.sample*' -exec rm -rf {} +
+        find ./database -name '*.sample*' -exec rm -rf {} +
         find ./src -name '*.sample*' -exec rm -rf {} +
         find ./test -name '*.sample*' -exec rm -rf {} +
         find . -name 'API.sample.md' -exec rm -rf {} +

@@ -1,6 +1,6 @@
 ---
-to: seeds/<%= seedName %>.js
+to: database/seeds/<%= seedName %>.js
 ---
-exports.seed = (knex) => {
-  return Promise.resolve();
+exports.seed = async (knex) => {
+  
 };

@@ -1,5 +1,5 @@
 ---
-to: migrations/<%= fileName %>.js
+to: database/migrations/<%= fileName %>.js
 ---
 exports.up = async (knex) => {
 

@@ -6,8 +6,14 @@
   "scripts": {
     "dev": "nodemon --inspect src | pino-pretty",
     "lint": "eslint .",
-    "test": "knex migrate:latest --env test && jest --runInBand --config=jest.config.js",
-    "check-staged": "lint-staged"
+    "test": "NODE_ENV=test yarn migrate:latest && jest --runInBand --config=jest.config.js",
+    "check-staged": "lint-staged",
+    "migrate:latest": "node ./database/migrateLatest.js",
+    "migrate:rollback": "node ./database/migrateRollback.js",
+    "migrate:up": "node ./database/migrateUp.js",
+    "migrate:down": "node ./database/migrateDown.js",
+    "migrate:list": "npx knex migrate:list",
+    "recreateViews": "node ./database/recreateViews.js"
   },
   "author": "",
   "license": "ISC",
@@ -53,7 +59,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "./bin/task test"
+      "pre-commit": "./bin/task lint && ./bin/task test"
     }
   }
 }

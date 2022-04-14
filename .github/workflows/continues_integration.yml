@@ -87,7 +87,7 @@ jobs:
         run: yarn install
 
       - name: Migrate database
-        run: yarn knex migrate:latest
+        run: yarn migrate:latest
 
       - name: Run tests
         run: yarn run test

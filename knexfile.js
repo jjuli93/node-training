@@ -1,4 +1,7 @@
 require('dotenv').config();
+const path = require('path');
+
+const BASE_PATH = path.join(__dirname, 'database');
 
 const makeConfig = (environment) => {
   const databaseName = environment === 'test' ? null : process.env.DATABASE_NAME;
@@ -10,6 +13,12 @@ const makeConfig = (environment) => {
       password: process.env.DATABASE_PASSWORD,
       host: process.env.DATABASE_HOST,
       port: process.env.DATABASE_PORT,
+    },
+    migrations: {
+      directory: path.join(BASE_PATH, 'migrations'),
+    },
+    seeds: {
+      directory: path.join(BASE_PATH, 'seeds'),
     },
     pool: {
       min: 2,

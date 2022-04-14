@@ -131,10 +131,10 @@ none **docker** users just type the commands directly on the root of the project
 In order to have the latest schema on your database you need to run the following command:
 
 ```
-$ npx knex migrate:latest
+$ yarn migrate:latest
 ```
 
-Then to create some seed data for development the following command could be run:
+Then to create some seed data for development the following command can be run:
 
 ```
 $ npx knex seed:run
