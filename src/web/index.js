@@ -5,8 +5,8 @@ const thingsRouter = require('./things.router.sample'); // bin/cleanup mark
 
 const apiRouter = new Router({ prefix: '/api' });
 
-apiRouter.get('/', (ctx) => {
-  ctx.body = { hello: 'World' };
+apiRouter.get('/healthcheck', (ctx) => {
+  ctx.body = { status: 'ok' };
 });
 
 apiRouter.use(requestLoggerMiddleware());
