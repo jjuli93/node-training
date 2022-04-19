@@ -14,9 +14,7 @@ router.get(
   '/',
   withResponseMiddleware(
     thingsIndexSerializer,
-    (ctx) => {
-      return thingsLib.all({ pageConfig: ctx.state.pageConfig, ids: ctx.query.ids });
-    },
+    (ctx) => thingsLib.all({ pageConfig: ctx.state.pageConfig, ids: ctx.query.ids }),
     {
       paged: true,
       defaultPageSize: 20,

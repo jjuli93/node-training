@@ -9,8 +9,8 @@ const validations = require('./things.validations');
 
 const THING_VALID_PARAMS = ['name', 'category_id'];
 
-const all = ({ pageConfig: { page, pageSize }, ids = null }) => {
-  return Thing.query()
+const all = ({ pageConfig: { page, pageSize }, ids = null }) =>
+  Thing.query()
     .modify((qb) => {
       if (Array.isArray(ids)) {
         qb.findByIds(ids);
@@ -20,7 +20,6 @@ const all = ({ pageConfig: { page, pageSize }, ids = null }) => {
     .returning('*')
     .withGraphFetched('category.[things]')
     .page(page, pageSize);
-};
 
 const create = async ({ thing }) => {
   if (!thing) {
@@ -42,10 +41,7 @@ const create = async ({ thing }) => {
     });
   }
 
-  return Thing.query()
-    .insert(thingParams)
-    .returning('*')
-    .withGraphFetched('category.[things]');
+  return Thing.query().insert(thingParams).returning('*').withGraphFetched('category.[things]');
 };
 
 module.exports = { all, create };

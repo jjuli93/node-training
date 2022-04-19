@@ -2,7 +2,7 @@
 # Base Information        #
 ###########################
 
-FROM node:14-alpine
+FROM node:16-alpine
 
 LABEL maintainer="sre@moove-it.com"
 LABEL version="1.0.0"

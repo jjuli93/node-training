@@ -3,7 +3,7 @@ require('dotenv').config();
 const constants = require('./constants');
 
 const { initializeApp } = require('../lib');
-const { logger } = require('../lib/initializers/logger');
+const { logger } = require('./utils/logger');
 
 const router = require('./web');
 const errorCodeToStatusMap = require('./config/errorCodeToStatusMap');

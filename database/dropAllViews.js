@@ -9,9 +9,7 @@ async function dropAllViews(knexConnection) {
 
   console.log('Dropping the following views:', viewNamesToDrop);
   await Promise.all(
-    viewNamesToDrop.map((viewName) => {
-      return knexConnection.raw(`DROP VIEW IF EXISTS ${viewName}`);
-    }),
+    viewNamesToDrop.map((viewName) => knexConnection.raw(`DROP VIEW IF EXISTS ${viewName}`)),
   );
 
   console.log('Views dropped!');

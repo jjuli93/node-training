@@ -22,9 +22,7 @@ describe('things/router', () => {
     subject(() => {
       const server = get('server');
       const query = get('query');
-      return request(server)
-        .get('/')
-        .query(query);
+      return request(server).get('/').query(query);
     });
 
     beforeEach(() => {
@@ -162,11 +160,7 @@ describe('things/router', () => {
   });
 
   describe('POST /', () => {
-    subject(() =>
-      request(get('server'))
-        .post('/')
-        .send(get('requestBody')),
-    );
+    subject(() => request(get('server')).post('/').send(get('requestBody')));
 
     describe('with valid attributes', () => {
       def('requestBody', () => ({ thing: { name: 'a', category_id: 1 } }));

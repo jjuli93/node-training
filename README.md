@@ -80,7 +80,7 @@ $ asdf plugin add nodejs
 And then to install nodejs run the following command
 
 ```
-$ asdf install nodejs 14.0.0
+$ asdf install nodejs 16.10.0
 ```
 
 

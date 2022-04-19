@@ -6,9 +6,7 @@ describe('things/service', () => {
   let category;
 
   beforeEach(async () => {
-    [category] = await knexConnection('categories')
-      .insert({ name: 'a Category' })
-      .returning('*');
+    [category] = await knexConnection('categories').insert({ name: 'a Category' }).returning('*');
   });
 
   describe('all', () => {
@@ -33,7 +31,7 @@ describe('things/service', () => {
       def('pageConfig', () => undefined);
 
       it('throws TypeError', () => {
-        expect(() => subject()).toThrow("Cannot read property 'page' of undefined");
+        expect(() => subject()).toThrow("Cannot read properties of undefined (reading 'page')");
       });
     });
 

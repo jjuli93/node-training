@@ -1,9 +1,6 @@
 exports.up = (knex) =>
   knex.schema.alterTable('things', (table) => {
-    table
-      .integer('category_id')
-      .unsigned()
-      .notNullable();
+    table.integer('category_id').unsigned().notNullable();
     table.foreign('category_id').references('categories.id');
   });
 
