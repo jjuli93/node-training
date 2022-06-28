@@ -1,6 +1,8 @@
 const { Model } = require('objection');
+const { ModelWithTimestamps } = require('../../utils/ModelWithTimestamps');
 
-class Thing extends Model {
+// Since this model has timestamps declared in its migration table, it's better to use the ModelWithTimestamps helper instead of the Objection base Model
+class Thing extends ModelWithTimestamps {
   static get tableName() {
     return 'things';
   }
