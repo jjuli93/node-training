@@ -1,5 +1,6 @@
 const { ValidationError, CategoryNotFound } = require('../../../src/errors');
 const thingsService = require('../../../src/lib/things.sample/things.service');
+const { mockDate, DEFAULT_FAKE_DATE } = require('../../helpers/mockDate');
 const { knexConnection } = require('../../knexTestHelper');
 
 describe('things/service', () => {
@@ -120,6 +121,8 @@ describe('things/service', () => {
   });
 
   describe('create', () => {
+    mockDate();
+
     const thingData = { name: 'some thing' };
     const createThing = (categoryId) =>
       thingsService.create({ thing: { ...thingData, category_id: categoryId } });
@@ -130,13 +133,13 @@ describe('things/service', () => {
           await createThing(category.id);
           const thing = await knexConnection.first('*').from('things');
 
-          expect(thing).toMatchObject({ name: thingData.name });
+          expect(thing).toMatchObject({ name: thingData.name, created_at: DEFAULT_FAKE_DATE });
         });
 
         it('returns the newly created thing', async () => {
           const result = await createThing(category.id);
 
-          expect(result).toMatchObject({ name: thingData.name });
+          expect(result).toMatchObject({ name: thingData.name, created_at: DEFAULT_FAKE_DATE });
         });
       });
 
