@@ -20,6 +20,7 @@ class Thing extends ModelWithTimestamps {
 
   static get relationMappings() {
     const { Category } = require('../categories.sample/categories.model'); //eslint-disable-line
+    const { Genre } = require('../genres.sample/genres.model'); // eslint-disable-line
 
     return {
       category: {
@@ -28,6 +29,18 @@ class Thing extends ModelWithTimestamps {
         join: {
           from: 'things.category_id',
           to: 'categories.id',
+        },
+      },
+      genres: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Genre,
+        join: {
+          from: 'things.id',
+          through: {
+            from: 'things_genres.thing_id',
+            to: 'things_genres.genre_id',
+          },
+          to: 'genres.id',
         },
       },
     };

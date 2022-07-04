@@ -1,7 +1,7 @@
 const { Serializer } = require('../../../lib');
 
 class ThingSerializer extends Serializer {
-  constructor({ categorySerializer = null } = {}) {
+  constructor({ categorySerializer = null, genreSerializer = null } = {}) {
     super({ collectionName: 'things' });
 
     this.baseFields = ['name', 'created_at', 'updated_at'];
@@ -16,6 +16,10 @@ class ThingSerializer extends Serializer {
     if (categorySerializer) {
       // Nested example
       this.meta.category = Serializer.nested('category', categorySerializer);
+    }
+
+    if (genreSerializer) {
+      this.meta.genres = Serializer.nested('genres', genreSerializer);
     }
   }
 

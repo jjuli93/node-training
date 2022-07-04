@@ -18,7 +18,7 @@ const all = ({ pageConfig: { page, pageSize }, ids = null }) =>
     })
     .modify('active')
     .returning('*')
-    .withGraphFetched('category.[things]')
+    .withGraphFetched('[category.[things], genres]')
     .page(page, pageSize);
 
 const create = async ({ thing }) => {

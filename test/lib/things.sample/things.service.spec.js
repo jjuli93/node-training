@@ -11,6 +11,8 @@ describe('things/service', () => {
   });
 
   describe('all', () => {
+    let thingsResults;
+
     beforeEach(async () => {
       const thingsToInsert = [
         { category_id: category.id, name: 'a Name 1', active: true },
@@ -21,7 +23,50 @@ describe('things/service', () => {
         { category_id: category.id, name: 'a Name 4', active: true },
         { category_id: category.id, name: 'a Name 5', active: true },
       ];
-      await knexConnection('things').insert(thingsToInsert);
+      const genresToInsert = [{ name: 'genre A' }, { name: 'genre B' }, { name: 'genre C' }];
+      const thingsIds = await knexConnection('things').insert(thingsToInsert).returning('id');
+      const genres = await knexConnection('genres').insert(genresToInsert).returning('*');
+      const thingsGenresToInsert = [
+        { thing_id: thingsIds[0].id, genre_id: genres[0].id },
+        { thing_id: thingsIds[0].id, genre_id: genres[1].id },
+        { thing_id: thingsIds[0].id, genre_id: genres[2].id },
+        { thing_id: thingsIds[1].id, genre_id: genres[1].id },
+        { thing_id: thingsIds[2].id, genre_id: genres[0].id },
+        { thing_id: thingsIds[3].id, genre_id: genres[2].id },
+        { thing_id: thingsIds[4].id, genre_id: genres[1].id },
+        { thing_id: thingsIds[4].id, genre_id: genres[2].id },
+        { thing_id: thingsIds[6].id, genre_id: genres[0].id },
+      ];
+
+      await knexConnection('things_genres').insert(thingsGenresToInsert);
+
+      thingsResults = [
+        {
+          name: 'a Name 1',
+          category: { name: 'a Category' },
+          genres,
+        },
+        {
+          name: 'a Name 2',
+          category: { name: 'a Category' },
+          genres: [genres[0]],
+        },
+        {
+          name: 'a Name 3',
+          category: { name: 'a Category' },
+          genres: [genres[1], genres[2]],
+        },
+        {
+          name: 'a Name 4',
+          category: { name: 'a Category' },
+          genres: [],
+        },
+        {
+          name: 'a Name 5',
+          category: { name: 'a Category' },
+          genres: [genres[0]],
+        },
+      ];
     });
 
     describe('when not passed a page config', () => {
@@ -41,13 +86,7 @@ describe('things/service', () => {
         it('returns the list of things (ignoring inactive) and the total things count', async () => {
           const things = await thingsService.all({ pageConfig });
           expect(things).toMatchObject({
-            results: [
-              { name: 'a Name 1', category: { name: 'a Category' } },
-              { name: 'a Name 2', category: { name: 'a Category' } },
-              { name: 'a Name 3', category: { name: 'a Category' } },
-              { name: 'a Name 4', category: { name: 'a Category' } },
-              { name: 'a Name 5', category: { name: 'a Category' } },
-            ],
+            results: thingsResults,
             total: 5,
           });
         });
@@ -59,10 +98,7 @@ describe('things/service', () => {
         it('returns the list of things (ignoring inactive) and the total things count', async () => {
           const things = await thingsService.all({ pageConfig });
           expect(things).toMatchObject({
-            results: [
-              { name: 'a Name 1', category: { name: 'a Category' } },
-              { name: 'a Name 2', category: { name: 'a Category' } },
-            ],
+            results: [thingsResults[0], thingsResults[1]],
             total: 5,
           });
         });
@@ -74,10 +110,7 @@ describe('things/service', () => {
         it('returns the list of things (ignoring inactive) and the total things count', async () => {
           const things = await thingsService.all({ pageConfig });
           expect(things).toMatchObject({
-            results: [
-              { name: 'a Name 3', category: { name: 'a Category' } },
-              { name: 'a Name 4', category: { name: 'a Category' } },
-            ],
+            results: [thingsResults[2], thingsResults[3]],
             total: 5,
           });
         });
@@ -92,11 +125,7 @@ describe('things/service', () => {
           it('returns those things (ignoring inactive)', async () => {
             const things = await thingsService.all({ pageConfig, ids: thingsIds });
             expect(things).toMatchObject({
-              results: [
-                { name: 'a Name 1', category: { name: 'a Category' } },
-                { name: 'a Name 2', category: { name: 'a Category' } },
-                { name: 'a Name 3', category: { name: 'a Category' } },
-              ],
+              results: [thingsResults[0], thingsResults[1], thingsResults[2]],
               total: 3,
             });
           });
@@ -108,10 +137,7 @@ describe('things/service', () => {
           it('returns those things (ignoring inactive)', async () => {
             const things = await thingsService.all({ pageConfig, ids: thingsIds });
             expect(things).toMatchObject({
-              results: [
-                { name: 'a Name 1', category: { name: 'a Category' } },
-                { name: 'a Name 2', category: { name: 'a Category' } },
-              ],
+              results: [thingsResults[0], thingsResults[1]],
               total: 3,
             });
           });
