@@ -7,51 +7,39 @@ describe('things/validations', () => {
   describe('create', () => {
     const validThing = pick(thing1, ['name', 'category_id']);
 
-    subject(() => thingValidations.create.validate(get('params')));
-
-    const itIsInvalid = () => {
+    const itIsInvalid = (params) => {
       it('is invalid', () => {
-        expect(subject().error).toBeTruthy();
+        expect(thingValidations.create.validate(params).error).toBeTruthy();
       });
     };
 
-    const itIsValid = () => {
+    const itIsValid = (params) => {
       it('is valid', () => {
-        expect(subject().error).toBeUndefined();
+        expect(thingValidations.create.validate(params).error).toBeUndefined();
       });
     };
 
     describe('when the thing is correct', () => {
-      def('params', () => validThing);
-
-      itIsValid();
+      itIsValid(validThing);
     });
 
     describe('name', () => {
       describe('when it is not present', () => {
-        def('params', () => ({ ...validThing, name: undefined }));
-
-        itIsInvalid();
+        itIsInvalid({ ...validThing, name: undefined });
       });
 
       describe('when it is present', () => {
         describe('when it is not a string', () => {
-          def('params', () => ({ ...validThing, name: 123 }));
-
-          itIsInvalid();
+          itIsInvalid({ ...validThing, name: 123 });
         });
 
         describe('when it is a string', () => {
           describe('when its length is less than 3', () => {
-            def('params', () => ({ ...validThing, name: 'aa' }));
-
-            itIsInvalid();
+            itIsInvalid({ ...validThing, name: 'aa' });
           });
 
           describe('when its length is grater than or equal to 3', () => {
-            def('params', () => ({ ...validThing, name: 'aaa' }));
-
-            itIsValid();
+            itIsValid({ ...validThing, name: 'aaa' });
           });
         });
       });
@@ -59,28 +47,20 @@ describe('things/validations', () => {
 
     describe('category_id', () => {
       describe('when it is not present', () => {
-        def('params', () => ({ ...validThing, category_id: undefined }));
-
-        itIsInvalid();
+        itIsInvalid({ ...validThing, category_id: undefined });
       });
 
       describe('when it is present', () => {
         describe('when it is not a number', () => {
-          def('params', () => ({ ...validThing, category_id: 'abc' }));
-
-          itIsInvalid();
+          itIsInvalid({ ...validThing, category_id: 'abc' });
         });
 
         describe('when it is a number', () => {
-          def('params', () => ({ ...validThing, category_id: 123 }));
-
-          itIsValid();
+          itIsValid({ ...validThing, category_id: 123 });
         });
 
         describe('when it is a string that represents number', () => {
-          def('params', () => ({ ...validThing, category_id: '123' }));
-
-          itIsValid();
+          itIsValid({ ...validThing, category_id: '123' });
         });
       });
     });

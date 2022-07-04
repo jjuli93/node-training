@@ -10,21 +10,14 @@ const thingsRouter = require('../../src/web/things.router.sample');
 const { thing1, thing2 } = require('../fixtures/things.sample');
 
 describe('things/router', () => {
-  def('app', () => initializeApp({ router: thingsRouter, errorCodeToStatusMap }));
+  const app = initializeApp({ router: thingsRouter, errorCodeToStatusMap });
+  const server = app.listen();
 
-  def('server', () => get('app').listen());
-
-  afterEach(() => {
-    get('server').close();
+  afterAll(() => {
+    server.close();
   });
 
   describe('GET /', () => {
-    subject(() => {
-      const server = get('server');
-      const query = get('query');
-      return request(server).get('/').query(query);
-    });
-
     beforeEach(() => {
       const serviceResponse = {
         results: [thing1, thing2],
@@ -33,9 +26,9 @@ describe('things/router', () => {
       thingsService.all.mockImplementation(() => serviceResponse);
     });
 
-    const itSendsExpectedResponse = ({ page, pageSize }) => {
+    const itSendsExpectedResponse = ({ page, pageSize }, query) => {
       it('sends the expected response', async () => {
-        const response = await subject();
+        const response = await request(server).get('/').query(query);
         expect(response.status).toBe(200);
         expect(response.body).toMatchObject({
           things: [{ name: thing1.name }, { name: thing2.name }],
@@ -47,10 +40,10 @@ describe('things/router', () => {
     const defaultPageConfig = { page: 0, pageSize: 20 };
 
     describe('when no query is passed', () => {
-      def('query', () => undefined);
+      const query = undefined;
 
       it('passes default page config to the service', async () => {
-        await subject();
+        await request(server).get('/').query(query);
         expect(thingsService.all).toHaveBeenCalledWith({ pageConfig: defaultPageConfig });
       });
 
@@ -59,21 +52,21 @@ describe('things/router', () => {
 
     describe('when a query is passed', () => {
       describe('when pagination parameters are passed', () => {
-        def('query', () => ({ page: 2, pageSize: 5 }));
+        const query = { page: 2, pageSize: 5 };
 
         it('passes them to the service', async () => {
-          await subject();
+          await request(server).get('/').query(query);
           expect(thingsService.all).toHaveBeenCalledWith({ pageConfig: { page: 2, pageSize: 5 } });
         });
 
-        itSendsExpectedResponse({ page: 2, pageSize: 5 });
+        itSendsExpectedResponse({ page: 2, pageSize: 5 }, query);
       });
 
       describe('when invalid pagination parameters are passed', () => {
-        def('query', () => ({ page: 'hola', pageSize: 5 }));
+        const query = { page: 'hola', pageSize: 5 };
 
         it('throws a validation error', async () => {
-          const response = await subject();
+          const response = await request(server).get('/').query(query);
           expect(response.status).toBe(400);
           expect(response.body).toEqual({
             error: { details: '"page" must be a number' },
@@ -83,87 +76,86 @@ describe('things/router', () => {
 
       describe('when ids are passed in bracket format (ids[]=123&ids[]=234)', () => {
         describe('when there is a single item in the array', () => {
-          def('query', () => qs.stringify({ ids: [123] }, { arrayFormat: 'brackets' }));
+          const query = qs.stringify({ ids: [123] }, { arrayFormat: 'brackets' });
 
           it('passes it to the service properly', async () => {
-            await subject();
+            await request(server).get('/').query(query);
             expect(thingsService.all).toHaveBeenCalledWith({
               ids: ['123'],
               pageConfig: defaultPageConfig,
             });
           });
 
-          itSendsExpectedResponse(defaultPageConfig);
+          itSendsExpectedResponse(defaultPageConfig, query);
         });
 
         describe('when there are multiple items in the array', () => {
-          def('query', () => qs.stringify({ ids: [123, 234] }, { arrayFormat: 'brackets' }));
+          const query = qs.stringify({ ids: [123, 234] }, { arrayFormat: 'brackets' });
 
           it('passes it to the service properly', async () => {
-            await subject();
+            await request(server).get('/').query(query);
             expect(thingsService.all).toHaveBeenCalledWith({
               ids: ['123', '234'],
               pageConfig: defaultPageConfig,
             });
           });
 
-          itSendsExpectedResponse(defaultPageConfig);
+          itSendsExpectedResponse(defaultPageConfig, query);
         });
       });
 
       describe('when ids are passed in repeat format (ids=123&ids=234)', () => {
         describe('when there is a single id in the array', () => {
-          def('query', () => qs.stringify({ ids: [123] }, { arrayFormat: 'repeat' }));
+          const query = qs.stringify({ ids: [123] }, { arrayFormat: 'repeat' });
 
           it('passes it to the service, but as a string instead of an array', async () => {
-            await subject();
+            await request(server).get('/').query(query);
             expect(thingsService.all).toHaveBeenCalledWith({
               ids: '123',
               pageConfig: defaultPageConfig,
             });
           });
 
-          itSendsExpectedResponse(defaultPageConfig);
+          itSendsExpectedResponse(defaultPageConfig, query);
         });
 
         describe('when there are multiple items in the array', () => {
-          def('query', () => qs.stringify({ ids: [123, 234] }, { arrayFormat: 'repeat' }));
+          const query = qs.stringify({ ids: [123, 234] }, { arrayFormat: 'repeat' });
 
           it('passes it to the service properly', async () => {
-            await subject();
+            await request(server).get('/').query(query);
             expect(thingsService.all).toHaveBeenCalledWith({
               ids: ['123', '234'],
               pageConfig: defaultPageConfig,
             });
           });
 
-          itSendsExpectedResponse(defaultPageConfig);
+          itSendsExpectedResponse(defaultPageConfig, query);
         });
       });
 
       describe('when ids and pagination parameters are passed', () => {
-        def('query', () =>
-          qs.stringify({ ids: [123], page: 2, pageSize: 5 }, { arrayFormat: 'brackets' }),
+        const query = qs.stringify(
+          { ids: [123], page: 2, pageSize: 5 },
+          { arrayFormat: 'brackets' },
         );
 
         it('passes them to the service', async () => {
-          await subject();
+          await request(server).get('/').query(query);
           expect(thingsService.all).toHaveBeenCalledWith({
             pageConfig: { page: 2, pageSize: 5 },
             ids: ['123'],
           });
         });
 
-        itSendsExpectedResponse({ page: 2, pageSize: 5 });
+        itSendsExpectedResponse({ page: 2, pageSize: 5 }, query);
       });
     });
   });
 
   describe('POST /', () => {
-    subject(() => request(get('server')).post('/').send(get('requestBody')));
-
     describe('with valid attributes', () => {
-      def('requestBody', () => ({ thing: { name: 'a', category_id: 1 } }));
+      const requestBody = { thing: { name: 'a', category_id: 1 } };
 
       beforeEach(() => {
         const serviceResponse = {
@@ -174,7 +166,7 @@ describe('things/router', () => {
       });
 
       it('sends the expected response', async () => {
-        const response = await subject();
+        const response = await request(server).post('/').send(requestBody);
         expect(response.status).toBe(200);
         expect(response.body).toMatchObject({ name: thing1.name, category: { name: 'catcat' } });
       });

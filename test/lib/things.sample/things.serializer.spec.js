@@ -27,7 +27,7 @@ describe('things/serializer', () => {
   };
 
   describe('by default', () => {
-    subject(() => new ThingSerializer().serialize(serviceOutput));
+    const serializer = new ThingSerializer();
 
     it('serializes properly', () => {
       const serializerOutput = {
@@ -38,18 +38,16 @@ describe('things/serializer', () => {
         reverseName: '1_t',
       };
 
-      expect(subject()).toEqual(serializerOutput);
+      expect(serializer.serialize(serviceOutput)).toEqual(serializerOutput);
     });
   });
 
   describe('when given a category serializer', () => {
-    subject(() => {
-      const basicThingSerializer = new ThingSerializer();
-      const categorySerializer = new CategorySerializer({
-        thingSerializer: basicThingSerializer,
-      });
-      return new ThingSerializer({ categorySerializer }).serialize(serviceOutput);
+    const basicThingSerializer = new ThingSerializer();
+    const categorySerializer = new CategorySerializer({
+      thingSerializer: basicThingSerializer,
     });
+    const serializer = new ThingSerializer({ categorySerializer });
 
     it('serializes properly', () => {
       const serializerOutput = {
@@ -81,7 +79,7 @@ describe('things/serializer', () => {
         reverseName: '1_t',
       };
 
-      expect(subject()).toEqual(serializerOutput);
+      expect(serializer.serialize(serviceOutput)).toEqual(serializerOutput);
     });
   });
 });

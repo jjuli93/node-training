@@ -10,10 +10,6 @@ describe('things/service', () => {
   });
 
   describe('all', () => {
-    def('thingIds', () => undefined);
-
-    subject(() => thingsService.all({ pageConfig: get('pageConfig'), ids: get('thingIds') }));
-
     beforeEach(async () => {
       const thingsToInsert = [
         { category_id: category.id, name: 'a Name 1', active: true },
@@ -28,19 +24,21 @@ describe('things/service', () => {
     });
 
     describe('when not passed a page config', () => {
-      def('pageConfig', () => undefined);
+      const pageConfig = undefined;
 
       it('throws TypeError', () => {
-        expect(() => subject()).toThrow("Cannot read properties of undefined (reading 'page')");
+        expect(() => thingsService.all({ pageConfig })).toThrow(
+          "Cannot read properties of undefined (reading 'page')",
+        );
       });
     });
 
     describe('when passed a page config', () => {
       describe('when getting all the things', () => {
-        def('pageConfig', () => ({ page: 0, pageSize: 10 }));
+        const pageConfig = { page: 0, pageSize: 10 };
 
         it('returns the list of things (ignoring inactive) and the total things count', async () => {
-          const things = await subject();
+          const things = await thingsService.all({ pageConfig });
           expect(things).toMatchObject({
             results: [
               { name: 'a Name 1', category: { name: 'a Category' } },
@@ -55,10 +53,10 @@ describe('things/service', () => {
       });
 
       describe('when getting the first page (size 2)', () => {
-        def('pageConfig', () => ({ page: 0, pageSize: 2 }));
+        const pageConfig = { page: 0, pageSize: 2 };
 
         it('returns the list of things (ignoring inactive) and the total things count', async () => {
-          const things = await subject();
+          const things = await thingsService.all({ pageConfig });
           expect(things).toMatchObject({
             results: [
               { name: 'a Name 1', category: { name: 'a Category' } },
@@ -70,10 +68,10 @@ describe('things/service', () => {
       });
 
       describe('when getting the second page (size 2)', () => {
-        def('pageConfig', () => ({ page: 1, pageSize: 2 }));
+        const pageConfig = { page: 1, pageSize: 2 };
 
         it('returns the list of things (ignoring inactive) and the total things count', async () => {
-          const things = await subject();
+          const things = await thingsService.all({ pageConfig });
           expect(things).toMatchObject({
             results: [
               { name: 'a Name 3', category: { name: 'a Category' } },
@@ -85,13 +83,13 @@ describe('things/service', () => {
       });
 
       describe('when passed an array of 5 ids', () => {
-        def('thingIds', () => [1, 2, 3, 4, 5]);
+        const thingsIds = [1, 2, 3, 4, 5];
 
         describe('and a pageSize of 10', () => {
-          def('pageConfig', () => ({ page: 0, pageSize: 10 }));
+          const pageConfig = { page: 0, pageSize: 10 };
 
           it('returns those things (ignoring inactive)', async () => {
-            const things = await subject();
+            const things = await thingsService.all({ pageConfig, ids: thingsIds });
             expect(things).toMatchObject({
               results: [
                 { name: 'a Name 1', category: { name: 'a Category' } },
@@ -104,10 +102,10 @@ describe('things/service', () => {
         });
 
         describe('and a pageSize of 2', () => {
-          def('pageConfig', () => ({ page: 0, pageSize: 2 }));
+          const pageConfig = { page: 0, pageSize: 2 };
 
           it('returns those things (ignoring inactive)', async () => {
-            const things = await subject();
+            const things = await thingsService.all({ pageConfig, ids: thingsIds });
             expect(things).toMatchObject({
               results: [
                 { name: 'a Name 1', category: { name: 'a Category' } },
@@ -123,39 +121,32 @@ describe('things/service', () => {
 
   describe('create', () => {
     const thingData = { name: 'some thing' };
-
-    subject(() =>
-      thingsService.create({
-        thing: {
-          ...thingData,
-          category_id: get('categoryId'),
-        },
-      }),
-    );
+    const createThing = (categoryId) =>
+      thingsService.create({ thing: { ...thingData, category_id: categoryId } });
 
     describe('when the params pass validations', () => {
       describe('with an existing category', () => {
-        def('categoryId', () => category.id);
-
         it('creates a new thing', async () => {
-          await subject();
+          await createThing(category.id);
           const thing = await knexConnection.first('*').from('things');
+
           expect(thing).toMatchObject({ name: thingData.name });
         });
 
         it('returns the newly created thing', async () => {
-          const result = await subject();
+          const result = await createThing(category.id);
+
           expect(result).toMatchObject({ name: thingData.name });
         });
       });
 
       describe('with a non-existing category', () => {
-        def('categoryId', () => 123123);
+        const invalidCategoryId = 123123;
 
         it('throws an expected error', async () => {
           expect.assertions(2);
           try {
-            await subject();
+            await createThing(invalidCategoryId);
           } catch (e) {
             expect(e).toMatchObject({
               message: 'Category not found',
@@ -171,12 +162,10 @@ describe('things/service', () => {
     });
 
     describe('when the params do not pass validations', () => {
-      def('categoryId', () => 'NaN');
-
       it('throws an error', async () => {
         expect.assertions(2);
         try {
-          await subject();
+          await createThing('NaN');
         } catch (e) {
           expect(e).toMatchObject({
             message: 'ValidationError',
@@ -201,16 +190,12 @@ describe('things/service', () => {
     });
 
     describe('when calling create with an undefined thing', () => {
-      subject(() =>
-        thingsService.create({
-          thing: undefined,
-        }),
-      );
-
       it('throws an error', async () => {
         expect.assertions(2);
         try {
-          await subject();
+          await thingsService.create({
+            thing: undefined,
+          });
         } catch (e) {
           expect(e).toMatchObject({
             message: 'ValidationError',
