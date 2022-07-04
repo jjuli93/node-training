@@ -13,7 +13,8 @@
     "migrate:up": "node ./database/migrateUp.js",
     "migrate:down": "node ./database/migrateDown.js",
     "migrate:list": "npx knex migrate:list",
-    "recreateViews": "node ./database/recreateViews.js"
+    "recreateViews": "node ./database/recreateViews.js",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
@@ -39,7 +40,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "husky": "^4.0.0",
+    "husky": "^8.0.1",
     "hygen": "^5.0.1",
     "inflection": "^1.12.0",
     "jest": "^26.0.0",
@@ -54,10 +55,5 @@
     "*.js": [
       "eslint"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "./bin/task lint && ./bin/task test"
-    }
   }
 }
