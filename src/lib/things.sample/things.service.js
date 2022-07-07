@@ -1,3 +1,5 @@
+const axios = require('axios');
+const constants = require('../../constants');
 const { pick } = require('../../utils/pick');
 
 const { ValidationError, CategoryNotFound } = require('../../errors');
@@ -8,6 +10,13 @@ const { Category } = require('../categories.sample');
 const validations = require('./things.validations');
 
 const THING_VALID_PARAMS = ['name', 'category_id'];
+
+const jsonPlaceholderInstance = axios.create({
+  baseURL: constants.API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
 const all = ({ pageConfig: { page, pageSize }, ids = null }) =>
   Thing.query()
@@ -44,4 +53,7 @@ const create = async ({ thing }) => {
   return Thing.query().insert(thingParams).returning('*').withGraphFetched('category.[things]');
 };
 
-module.exports = { all, create };
+// As this is just a sample fetch service, the retrieved data has no real meaning
+const fetchPost = ({ id = null }) => jsonPlaceholderInstance.get(`/posts/${id}`);
+
+module.exports = { all, create, fetchPost };

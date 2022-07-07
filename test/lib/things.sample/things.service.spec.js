@@ -1,3 +1,5 @@
+const nock = require('nock');
+const constants = require('../../../src/constants');
 const { ValidationError, CategoryNotFound } = require('../../../src/errors');
 const thingsService = require('../../../src/lib/things.sample/things.service');
 const { mockDate, DEFAULT_FAKE_DATE } = require('../../helpers/mockDate');
@@ -235,6 +237,24 @@ describe('things/service', () => {
           });
         }
       });
+    });
+  });
+
+  describe('fetchPost', () => {
+    const fetchPost = (id) => thingsService.fetchPost({ id });
+
+    it('should fetch the post with the given id', async () => {
+      const post = {
+        userId: 1,
+        id: 1,
+        title: 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit',
+        body: 'quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto',
+      };
+      nock(constants.API_URL).get('/posts/1').reply(200, post);
+
+      const response = await fetchPost(1);
+
+      expect(response.data).toMatchObject(post);
     });
   });
 });
