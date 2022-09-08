@@ -1,0 +1,28 @@
+{
+  "name": "node-training",
+  "version": "1.0.0",
+  "description": "NodeJS training",
+  "main": "list-files.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --fix",
+    "format": "prettier . --write",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjuli93/node-training.git"
+  },
+  "author": "Julián Ignacio Álvarez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jjuli93/node-training/issues"
+  },
+  "homepage": "https://github.com/jjuli93/node-training#readme",
+  "devDependencies": {
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^8.0.1",
+    "prettier": "2.7.1"
+  }
+}

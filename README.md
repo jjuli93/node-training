@@ -14,9 +14,9 @@ You will have an assigned mentor to help you with the questions you may have, to
 
 3. Ensure issues are enabled in your project. You can do this under in the Features section that's in Settings -> Options.
 
-3. Install the [copy tool app](https://github.com/apps/project-copy-bot/) on this repo
+4. Install the [copy tool app](https://github.com/apps/project-copy-bot/) on this repo
 
-4. Ask your mentor to setup the repository projects according to the onboarding plan devised for you. That plan is based on your background and previous working experience.
+5. Ask your mentor to setup the repository projects according to the onboarding plan devised for you. That plan is based on your background and previous working experience.
 
 ### Creating Pull Requests
 
