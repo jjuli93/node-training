@@ -13,4 +13,3 @@ Provide a description of what this PR addresses.
 #### :play_or_pause_button: Demo
 
 Image or video demo of the work you did.
-
