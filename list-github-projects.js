@@ -4,6 +4,7 @@ const keys = require('./keys');
 
 const args = process.argv;
 const repoSource = args[2];
+const repoNameRegex = args[3];
 const [owner, repo] = repoSource.split('/');
 
 if (!keys.githubKey) {
@@ -20,6 +21,13 @@ if (!owner || !repo) {
   );
 }
 
+let regex;
+try {
+  regex = repoNameRegex && new RegExp(repoNameRegex);
+} catch (e) {
+  return console.error('The string provided is not a valid regular expression');
+}
+
 const octokit = new Octokit({
   auth: keys.githubKey,
 });
@@ -31,32 +39,36 @@ const getProjectsDetails = async () => {
   });
 
   const details = await Promise.all(
-    projects.map(async (project) => {
-      const { data: columns } = await octokit.request(project.columns_url);
+    projects
+      .filter((project) => !regex || regex.test(project.name))
+      .map(async (project) => {
+        const { data: columns } = await octokit.request(project.columns_url);
 
-      return {
-        name: project.name,
-        columns: await Promise.all(
-          columns.map(async (column) => {
-            const { data: cards } = await octokit.request(column.cards_url);
+        return {
+          name: project.name,
+          columns: await Promise.all(
+            columns.map(async (column) => {
+              const { data: cards } = await octokit.request(column.cards_url);
 
-            return {
-              name: column.name,
-              cards: await Promise.all(
-                cards.map(async (card) => {
-                  const { data: cardDetails } = await octokit.request(card.url);
-                  const { data: issue } = await octokit.request(
-                    cardDetails.content_url,
-                  );
+              return {
+                name: column.name,
+                cards: await Promise.all(
+                  cards.map(async (card) => {
+                    const { data: cardDetails } = await octokit.request(
+                      card.url,
+                    );
+                    const { data: issue } = await octokit.request(
+                      cardDetails.content_url,
+                    );
 
-                  return issue.title;
-                }),
-              ),
-            };
-          }),
-        ),
-      };
-    }),
+                    return issue.title;
+                  }),
+                ),
+              };
+            }),
+          ),
+        };
+      }),
   );
   console.log(util.inspect(details, { depth: null }));
 };
