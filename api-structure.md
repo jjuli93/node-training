@@ -11,7 +11,6 @@
   `{ code: string, message: string }`
 
 ## Get movie
-
 - HTTP method: Get
 - HTTP path: `/movies/{movie_id}`
 - path parameters: `movie_id`
