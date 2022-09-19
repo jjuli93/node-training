@@ -4,4 +4,4 @@ exports.up = async (knex) =>
     table.string('name');
   });
 
-exports.down = async (knex) => knex.schema.dropTable('things');
+exports.down = async (knex) => knex.schema.dropTable('genres');
