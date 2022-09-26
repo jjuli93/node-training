@@ -21,10 +21,6 @@ module.exports = {
         });
       }
     }
-
-    query.then((data) => {
-      console.log(data);
-    });
     return query;
   },
   find: async (id) => {

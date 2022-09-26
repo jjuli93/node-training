@@ -35,7 +35,7 @@ describe('movies/router', () => {
     });
 
     describe('when invalid pagination parameters are passed', () => {
-      const query = { page: 'hola', pageSize: 5 };
+      const query = { page: 'not a number', pageSize: 5 };
 
       it('throws a validation error', async () => {
         const response = await request(server).get('/').query(query);
