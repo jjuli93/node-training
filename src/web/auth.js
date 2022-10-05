@@ -13,8 +13,8 @@ function localAuthenticator(ctx) {
       throw new Unauthorized({ details: 'Invalid credentials' });
     }
 
-    const { email, isAdmin } = user;
-    const token = jwt.sign({ email, isAdmin }, constants.JWT_SECRET);
+    const { email, isAdmin, id } = user;
+    const token = jwt.sign({ id, email, isAdmin }, constants.JWT_SECRET);
     ctx.body = { token };
   })(ctx);
 }

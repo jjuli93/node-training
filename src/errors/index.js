@@ -8,6 +8,7 @@ const errorsMap = buildErrorClasses([
   'MovieNotFound',
   'UserNotFound',
   'Unauthorized',
+  'Forbidden',
 ]);
 
 module.exports = errorsMap;

@@ -11,7 +11,7 @@ const localStrategy = new LocalStrategy(
       const user = await usersService.findByEmail(email);
       const success = await bcrypt.compare(password, user.password_hash);
       if (success) {
-        done(null, { email, isAdmin: false });
+        done(null, { id: user.id, email, isAdmin: false });
       } else {
         done(new Error('User not found'), null);
       }
