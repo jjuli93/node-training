@@ -4,6 +4,7 @@ const {
   MovieNotFound,
   Unauthorized,
   UserNotFound,
+  Forbidden,
 } = require('../errors');
 
 const errorCodeToStatusMap = {
@@ -12,6 +13,7 @@ const errorCodeToStatusMap = {
   [MovieNotFound.code]: 404,
   [UserNotFound.code]: 404,
   [Unauthorized.code]: 401,
+  [Forbidden.code]: 403,
 };
 
 module.exports = errorCodeToStatusMap;
