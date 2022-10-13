@@ -1,11 +1,13 @@
+const actionMoviesList = {
+  id: 1,
+  name: 'Best action movies',
+  description: 'Here you have the top action movies ever!',
+  public: false,
+  user_id: 1,
+};
+
 const lists = [
-  {
-    id: 1,
-    name: 'Best action movies',
-    description: 'Here you have the top action movies ever!',
-    public: false,
-    user_id: 1,
-  },
+  actionMoviesList,
   {
     id: 2,
     name: 'Best drama movies',
@@ -17,4 +19,5 @@ const lists = [
 
 module.exports = {
   lists,
+  actionMoviesList,
 };
