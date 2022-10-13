@@ -6,6 +6,7 @@ const errorsMap = buildErrorClasses([
   'BadRequest',
   'ValidationError',
   'MovieNotFound',
+  'ListNotFound',
   'UserNotFound',
   'Unauthorized',
   'Forbidden',
