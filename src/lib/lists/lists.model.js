@@ -8,7 +8,7 @@ class List extends Model {
 
   static get relationMappings() {
     return {
-      genre: {
+      movies: {
         relation: Model.ManyToManyRelation,
         modelClass: Movie,
         join: {

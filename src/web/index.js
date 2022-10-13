@@ -5,6 +5,7 @@ const authRouter = require('./auth');
 const genresRouter = require('./genres');
 const moviesRouter = require('./movies');
 const usersRouter = require('./users');
+const listsRouter = require('./lists');
 
 const apiRouter = new Router({ prefix: '/api' });
 
@@ -16,6 +17,7 @@ apiRouter.use('/genres', genresRouter.routes());
 apiRouter.use('/movies', moviesRouter.routes());
 apiRouter.use('/auth', authRouter.routes());
 apiRouter.use('/users', usersRouter.routes());
+apiRouter.use('/lists', listsRouter.routes());
 
 apiRouter.use(requestLoggerMiddleware());
 
