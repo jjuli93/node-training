@@ -5,6 +5,7 @@ const {
   Unauthorized,
   UserNotFound,
   Forbidden,
+  ProfilePhotoNotFound,
 } = require('../errors');
 
 const errorCodeToStatusMap = {
@@ -14,6 +15,7 @@ const errorCodeToStatusMap = {
   [UserNotFound.code]: 404,
   [Unauthorized.code]: 401,
   [Forbidden.code]: 403,
+  [ProfilePhotoNotFound.code]: 404,
 };
 
 module.exports = errorCodeToStatusMap;

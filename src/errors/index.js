@@ -9,6 +9,7 @@ const errorsMap = buildErrorClasses([
   'UserNotFound',
   'Unauthorized',
   'Forbidden',
+  'ProfilePhotoNotFound',
 ]);
 
 module.exports = errorsMap;

@@ -5,5 +5,6 @@ node_modules
 .idea/
 .vscode/
 /s3
+/uploads
 static/s3
 .DS_Store

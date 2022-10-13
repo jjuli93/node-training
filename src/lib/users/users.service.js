@@ -14,4 +14,29 @@ module.exports = {
     }
     return user;
   },
+  find: async (userId) => {
+    const user = await User.query().findById(userId);
+
+    if (!user) {
+      throw new UserNotFound({
+        message: 'User not found',
+        movie_id: userId,
+        details: 'No user was found with the given id',
+      });
+    }
+    return user;
+  },
+  addPhoto: async (userId, photoPath) => {
+    const user = await User.query().patchAndFetchById(userId, { photo_path: photoPath });
+
+    if (!user) {
+      throw new UserNotFound({
+        message: 'User not found',
+        movie_id: userId,
+        details: 'No user was found with the given id',
+      });
+    }
+
+    return user;
+  },
 };
